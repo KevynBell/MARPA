@@ -1,57 +1,58 @@
+from pathlib import Path
+
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-from pathlib import Path
 
 
+
+# ----------------------------
 # Hyperparameters
+# ----------------------------
 block_size = 8
 batch_size = 4
-max_iters = 3000
-eval_interval = 300
-learning_rate = 1e-2
+max_iters = 5000
+eval_interval = 500
+learning_rate = 1e-3
+n_embd = 32
 
-checkpoint_path = Path("models/marpa_bigram_v1.pth")
+
+checkpoint_path = Path("models/marpa_context_v1.pth")
 load_existing_model = True
 
+torch.manual_seed(1337)
 
-# Load Dataset
+# ----------------------------
+# Load dataset
+# ----------------------------
 with open("data/tiny_text.txt", "r", encoding="utf-8") as f:
     text = f.read()
 
-
-# Vocabulary
 chars = sorted(list(set(text)))
 vocab_size = len(chars)
 
-
-# Character ↔ Integer Mapping
 stoi = {ch: i for i, ch in enumerate(chars)}
 itos = {i: ch for i, ch in enumerate(chars)}
 
-
-# Encoder / Decoder
 def encode(s):
     return [stoi[c] for c in s]
 
 def decode(l):
     return ''.join([itos[i] for i in l])
 
-
-# Encode dataset
 data = torch.tensor(encode(text), dtype=torch.long)
 
-
-# Train / Validation
 n = int(0.9 * len(data))
 train_data = data[:n]
 val_data = data[n:]
 
 
-# Create training batches
+# ----------------------------
+# Batching
+# ----------------------------
 def get_batch(split):
     
-    data = train_data if split == 'train' else val_data
+    data_source = train_data if split == 'train' else val_data
     
     ix = torch.randint(len(data) - block_size, (batch_size,))
     
@@ -60,40 +61,66 @@ def get_batch(split):
     
     return x, y
 
-# Bigram Language Model
-class BigramLanguageModel(nn.Module):
+@torch.no_grad()
+def estimate_loss():
+    out = {}
+    model.eval()
+
+    for split in ["train", "val"]:
+        losses = torch.zeros(100)
+
+        for k in range(100):
+            x, y = get_batch(split)
+            logits, loss = model(x, y)
+            losses[k] = loss.item()
+
+        out[split] = losses.mean()
+
+    return out
+
+# ----------------------------
+# Context-Aware Language Model
+# ----------------------------
+class ContextLanguageModel(nn.Module):
     
-    def __init__(self, vocab_size):
+    def __init__(self):
         super().__init__()
         
-        # Lookup table
-        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+        self.position_embedding_table = nn.Embedding(block_size, n_embd)
+
+        self.lm_head = nn.Linear(n_embd, vocab_size)
         
         
     def forward(self, idx, targets=None):
-        
-        # Get Predictions
-        
-        logits = self.token_embedding_table(idx)
-        
+        B, T = idx.shape
+
+        token_emb = self.token_embedding_table(idx)
+        position_emb = self.position_embedding_table(torch.arange(T))
+
+        x = token_emb + position_emb
+
+        logits = self.lm_head(x)
+
         if targets is None:
             loss = None
         else:
             B, T, C = logits.shape
-            
+
             logits = logits.view(B * T, C)
-            targets = targets.view(B * T)
-            
+            targets = targets.view(B *T)
+
             loss = F.cross_entropy(logits, targets)
-            
+
         return logits, loss
     
     
     def generate(self, idx, max_new_tokens):
-        
         for _ in range(max_new_tokens):
             
-            logits, loss = self(idx)
+            idx_cond = idx[:, -block_size:]
+
+            logits, loss = self(idx_cond)
             
             logits = logits[:, -1, :]
             
@@ -106,8 +133,10 @@ class BigramLanguageModel(nn.Module):
         return idx
     
     
-# Create model
-model = BigramLanguageModel(vocab_size)
+# ----------------------------
+# Create / Load Model
+# ----------------------------
+model = ContextLanguageModel()
 
 if load_existing_model and checkpoint_path.exists():
     model.load_state_dict(torch.load(checkpoint_path))
@@ -120,31 +149,41 @@ else:
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
 
+# ----------------------------
 # Training Loop
-for iter in range(max_iters):
+# ----------------------------
+for step in range(max_iters):
 
-    xb, yb = get_batch('train')
+    if step % eval_interval == 0:
+        losses = estimate_loss()
+        print(
+            f"step {step}: "
+            f"train loss = {losses['train']:.4f}, "
+            f"val loss = {losses['val']:.4f}"
+        )
+
+    xb, yb = get_batch("train")
 
     logits, loss = model(xb, yb)
     
     optimizer.zero_grad(set_to_none=True)
-    
     loss.backward()
-    
     optimizer.step()
     
-    if iter % eval_interval == 0:
-        print(f"step {iter}: Loss = {loss.item():.4f}")
-        
+# ----------------------------
+# Save Model
+# ----------------------------        
 torch.save(model.state_dict(), checkpoint_path)
 print(f"Saved MARPA checkpoint to {checkpoint_path}")
 
 
-# Generate text
+# ----------------------------
+# Generate Text
+# ----------------------------
 context = torch.zeros((1, 1), dtype=torch.long)
 
 generated_text = decode (
-    model.generate(context, max_new_tokens=100)[0].tolist()
+    model.generate(context, max_new_tokens=300)[0].tolist()
 )
 
 print("\nGenerated Text:")
