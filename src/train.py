@@ -16,7 +16,9 @@ eval_iters = 100
 n_embd = 64
 n_head = 4
 
-checkpoint_path = Path("models/marpa_hydra_v1.pth")
+dropout = 0.2
+
+checkpoint_path = Path("models/marpa_transformer_v1.pth")
 load_existing_model = True
 
 torch.manual_seed(1337)
@@ -126,12 +128,52 @@ class MultiHeadAttention(nn.Module):
         ])
 
         self.proj = nn.Linear(n_embd, n_embd)
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
         out = torch.cat([head(x) for head in self.heads], dim=-1)
         out = self.proj(out)
+        out = self.dropout(out)
 
         return out
+
+
+class FeedForward(nn.Module):
+    """A simple neural network layer after attention."""
+
+    def __init__(self, n_embd):
+        super().__init__()
+
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, 4 * n_embd),
+            nn.ReLU(),
+            nn.Linear(4 * n_embd, n_embd),
+            nn.Dropout(dropout),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+
+class Block(nn.Module):
+    """Transformer block: communication followed by computation."""
+
+    def __init__(self, n_embd, n_head):
+        super().__init__()
+
+        head_size = n_embd // n_head
+
+        self.sa = MultiHeadAttention(n_head, head_size)
+        self.ffwd = FeedForward(n_embd)
+
+        self.ln1 = nn.LayerNorm(n_embd)
+        self.ln2 = nn.LayerNorm(n_embd)
+
+    def forward(self, x):
+        x = x + self.sa(self.ln1(x))
+        x = x + self.ffwd(self.ln2(x))
+
+        return x
 
 # ----------------------------
 # MARPA Self-Attention Model
@@ -144,9 +186,8 @@ class AttentionLanguageModel(nn.Module):
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
         self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
-        head_size = n_embd // n_head
-        self.sa_heads = MultiHeadAttention(n_head, head_size)
-
+        self.block = Block(n_embd, n_head)
+        self.ln_f = nn.LayerNorm(n_embd)
         self.lm_head = nn.Linear(n_embd, vocab_size)
 
     def forward(self, idx, targets=None):
@@ -157,7 +198,8 @@ class AttentionLanguageModel(nn.Module):
 
         x = token_emb + position_emb
 
-        x = self.sa_heads(x)
+        x = self.block(x)
+        x = self.ln_f(x)
 
         logits = self.lm_head(x)
 
