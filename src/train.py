@@ -14,8 +14,9 @@ eval_interval = 500
 learning_rate = 1e-3
 eval_iters = 100
 n_embd = 64
+n_head = 4
 
-checkpoint_path = Path("models/marpa_attention_v1.pth")
+checkpoint_path = Path("models/marpa_hydra_v1.pth")
 load_existing_model = True
 
 torch.manual_seed(1337)
@@ -113,6 +114,25 @@ class Head(nn.Module):
 
         return out
 
+
+class MultiHeadAttention(nn.Module):
+    """Multiple self-attention heads running in parallel."""
+
+    def __init__(self, num_heads, head_size):
+        super().__init__()
+
+        self.heads = nn.ModuleList([
+            Head(head_size) for _ in range(num_heads)
+        ])
+
+        self.proj = nn.Linear(n_embd, n_embd)
+
+    def forward(self, x):
+        out = torch.cat([head(x) for head in self.heads], dim=-1)
+        out = self.proj(out)
+
+        return out
+
 # ----------------------------
 # MARPA Self-Attention Model
 # ----------------------------
@@ -124,7 +144,8 @@ class AttentionLanguageModel(nn.Module):
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
         self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
-        self.sa_head = Head(n_embd)
+        head_size = n_embd // n_head
+        self.sa_heads = MultiHeadAttention(n_head, head_size)
 
         self.lm_head = nn.Linear(n_embd, vocab_size)
 
@@ -136,7 +157,7 @@ class AttentionLanguageModel(nn.Module):
 
         x = token_emb + position_emb
 
-        x = self.sa_head(x)
+        x = self.sa_heads(x)
 
         logits = self.lm_head(x)
 
