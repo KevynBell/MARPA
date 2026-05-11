@@ -1,0 +1,9 @@
+hello world
+this is marpa
+marpa learns language
+marpa learns from patterns
+marpa predicts the next character
+language models learn by prediction
+the model improves when the loss goes down
+tokens are numbers that represent text
+marpa is a memory augmented reasoning and planning assistant
