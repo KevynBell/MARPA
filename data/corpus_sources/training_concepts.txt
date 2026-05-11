@@ -1,0 +1,49 @@
+Training teaches a model to reduce loss.
+Loss measures how wrong a model prediction is.
+Lower loss usually means better predictions.
+Backpropagation calculates how each weight affected the error.
+An optimizer updates the model weights.
+Weights store what the model has learned.
+
+The model begins with random weights.
+Training changes the weights.
+The dataset is the teacher.
+The checkpoint stores the learned weights.
+Loading a checkpoint lets training continue later.
+Saving a checkpoint prevents the model from starting over.
+
+A small model can still teach important ideas.
+A tiny model helps developers understand tokenization.
+A tiny model helps developers understand loss.
+A tiny model helps developers understand attention.
+A tiny model helps developers understand training.
+Understanding small systems makes larger systems less mysterious.
+
+MARPA learns language from text.
+MARPA learns patterns from repeated examples.
+MARPA cannot understand like a human.
+MARPA predicts based on learned probabilities.
+MARPA can become more useful with better data, better architecture, and better tools.
+
+A model does not learn by magic.
+A model learns by adjusting weights.
+A model compares predictions to targets.
+The loss function measures prediction error.
+Backpropagation calculates gradients.
+The optimizer uses gradients to update weights.
+Training repeats this process many times.
+
+A checkpoint stores the model state.
+A checkpoint allows training to continue later.
+A checkpoint can be shared between computers.
+If the architecture changes, the old checkpoint may not load.
+If the vocabulary changes, the old checkpoint may not load.
+A new dataset may require a fresh checkpoint.
+
+Training output should be reviewed carefully.
+Generated text may look strange at first.
+Strange output can still show learning.
+Recognizable phrases show that the model is finding patterns.
+Lower training loss shows that the model is fitting the training data.
+Reasonable validation loss shows that the model may generalize better.
+The best model is not always the one with the lowest training loss.

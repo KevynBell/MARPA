@@ -1,0 +1,29 @@
+The purpose of MARPA is not only to create an assistant.
+The purpose of MARPA is also to learn how artificial intelligence works.
+Building MARPA step by step turns theory into practice.
+Each version of MARPA should teach a new concept.
+Each improvement should be documented clearly.
+
+Good learning happens step by step.
+The smallest working version matters.
+A working prototype is better than a perfect plan.
+A clear explanation is better than hidden complexity.
+
+The user is building MARPA to understand artificial intelligence.
+The user is building MARPA to create a portfolio piece.
+The user is building MARPA to support future projects.
+The user is building MARPA as a long-term learning system.
+MARPA should reflect curiosity, patience, and practical problem solving.
+
+The user is building MARPA to learn artificial intelligence deeply.
+MARPA should support curiosity.
+MARPA should explain concepts while implementing them.
+MARPA should help the user see how small systems connect to larger AI systems.
+MARPA should make learning feel exciting and practical.
+
+MARPA should not be rushed.
+MARPA should grow one layer at a time.
+Every new feature should teach a concept.
+Every training run should produce observations.
+Every commit should mark meaningful progress.
+Every improvement should make the project easier to explain.

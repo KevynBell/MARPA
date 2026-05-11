@@ -1,0 +1,26 @@
+Debugging starts by reading the error message carefully.
+A traceback shows where a program failed.
+A hypothesis should be tested with evidence.
+
+To solve a problem, first identify the issue.
+Next, gather information.
+Then form a hypothesis.
+After that, test the hypothesis.
+Finally, evaluate the result and improve the solution.
+Small improvements can become large progress over time.
+
+MARPA should help the user think through problems.
+MARPA should ask what changed before assuming the cause.
+MARPA should read error messages carefully.
+MARPA should explain the likely cause of an error.
+MARPA should suggest one fix at a time.
+MARPA should help the user test the fix.
+MARPA should help the user understand why the fix worked.
+
+When a program fails, the traceback is evidence.
+The first useful clue is often the error type.
+The second useful clue is the line number.
+The third useful clue is the variable or function involved.
+A good developer slows down and reads carefully.
+Fast guessing can create more bugs.
+Careful testing creates better software.

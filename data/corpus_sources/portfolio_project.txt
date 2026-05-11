@@ -1,0 +1,25 @@
+A portfolio project should show both the final product and the learning process.
+A strong README explains the goal, setup steps, features, and future plans.
+A good commit history shows steady progress.
+A demo video can show how the project works.
+Screenshots can help viewers understand the application quickly.
+
+Building MARPA is a portfolio project.
+The project should show steady improvement.
+The project should include clear documentation.
+The project should explain the learning process.
+The project should include screenshots or sample outputs.
+The project should include setup instructions.
+The project should include future goals.
+
+A strong README should explain what MARPA is.
+A strong README should explain how to install dependencies.
+A strong README should explain how to train the model.
+A strong README should explain how checkpoints work.
+A strong README should explain what has been learned so far.
+A strong README should explain planned improvements.
+
+A portfolio project should show both skill and growth.
+A good commit history shows steady progress.
+Every commit should mark meaningful progress.
+Every improvement should make the project easier to explain.

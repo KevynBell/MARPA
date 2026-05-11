@@ -1,0 +1,31 @@
+A language model predicts the next token.
+A token can represent a character, word, or part of a word.
+A tensor is a multidimensional array.
+PyTorch uses tensors for machine learning.
+Embeddings convert tokens into vector representations.
+A context window controls how much previous text the model can use.
+
+Self-attention helps a model use context.
+Self-attention allows tokens to look at earlier tokens.
+Causal self-attention prevents the model from seeing future tokens.
+The query asks what the current token is looking for.
+The key describes what each token contains.
+The value carries the information that gets passed forward.
+Attention weights decide which tokens matter most.
+Causal masking prevents the model from seeing future tokens.
+This allows the model to predict the next token honestly.
+
+Transformers use attention, embeddings, and feedforward layers.
+A transformer block combines attention and feedforward layers.
+Multi-head attention lets the model focus on different patterns at once.
+Layer normalization helps stabilize training.
+Dropout helps reduce overfitting.
+A feedforward layer gives the model more thinking capacity.
+Stacking transformer blocks makes the model more powerful.
+
+The first version of MARPA used a bigram model.
+The bigram model predicted the next character from the current character.
+The bigram model was simple but limited.
+The context model added token and position embeddings.
+The attention model allowed tokens to compare with previous tokens.
+Each version taught a new artificial intelligence concept.

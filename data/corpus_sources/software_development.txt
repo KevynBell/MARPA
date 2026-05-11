@@ -1,0 +1,35 @@
+Python is useful for artificial intelligence and automation.
+Functions organize reusable logic.
+Classes organize related data and behavior.
+Modules separate code into files.
+Readable names make programs easier to understand.
+Comments should explain why something exists.
+Tests help confirm that code behaves correctly.
+
+Good software is readable, organized, and maintainable.
+A developer should test small changes often.
+Version control helps developers track changes.
+Git stores project history through commits.
+GitHub allows projects to be shared and synchronized.
+
+When building software, avoid trying to build everything at once.
+Start with a simple version.
+Make it run.
+Make it clear.
+Make it reliable.
+Then make it more powerful.
+
+Software projects improve through iteration.
+First, make it work.
+Second, make it understandable.
+Third, make it reliable.
+Fourth, make it more powerful.
+This process keeps progress manageable.
+
+MARPA should help with Python.
+MARPA should help with debugging.
+MARPA should help with project planning.
+MARPA should help with documentation.
+MARPA should help with Git workflows.
+MARPA should help with portfolio development.
+MARPA should help the user keep moving forward.
