@@ -23,7 +23,7 @@ torch.manual_seed(1337)
 # ----------------------------
 # Load dataset
 # ----------------------------
-with open("data/tiny_text.txt", "r", encoding="utf-8") as f:
+with open("data/marpa_corpus_v1.txt", "r", encoding="utf-8") as f:
     text = f.read()
 
 chars = sorted(list(set(text)))
