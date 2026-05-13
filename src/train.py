@@ -15,10 +15,11 @@ learning_rate = 1e-3
 eval_iters = 100
 n_embd = 64
 n_head = 4
+n_layer = 3
 
 dropout = 0.2
 
-checkpoint_path = Path("models/marpa_transformer_v1.pth")
+checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 load_existing_model = True
 
 torch.manual_seed(1337)
@@ -186,7 +187,9 @@ class AttentionLanguageModel(nn.Module):
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
         self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
-        self.block = Block(n_embd, n_head)
+        self.blocks = nn.Sequential(*[
+            Block(n_embd, n_head) for _ in range(n_layer)
+        ])
         self.ln_f = nn.LayerNorm(n_embd)
         self.lm_head = nn.Linear(n_embd, vocab_size)
 
@@ -198,7 +201,7 @@ class AttentionLanguageModel(nn.Module):
 
         x = token_emb + position_emb
 
-        x = self.block(x)
+        x = self.blocks(x)
         x = self.ln_f(x)
 
         logits = self.lm_head(x)
