@@ -1,0 +1,25 @@
+step 0: train loss = 0.8623, val loss = 1.7115
+step 500: train loss = 0.8699, val loss = 1.7941
+step 1000: train loss = 0.8416, val loss = 1.7992
+step 1500: train loss = 0.8410, val loss = 1.7379
+step 2000: train loss = 0.8499, val loss = 1.8027
+step 2500: train loss = 0.8096, val loss = 1.7635
+step 3000: train loss = 0.8027, val loss = 1.7918
+step 3500: train loss = 0.7998, val loss = 1.7890
+step 4000: train loss = 0.8155, val loss = 1.7771
+step 4500: train loss = 0.7747, val loss = 1.8424
+
+Generated Text:
+
+MARPA, what has behavidy calculates hasould show small system.
+
+Tsest smalles should support use ofter anthe currents to prefers nexamut artifiction inte.
+MARPA asser: MARPA, why, is the userents a code om the generwill brelize retrieval.
+The debuggis.
+A the project souss behaus an a confimpaulation.
+MARPA should supprent computers.
+A usuallysis.
+A uses a reful hassier tossubld complexity, compurioses explaigen?
+MARPA: A corcerts fhat should help but strucing casual is, smanable pnexity.
+
+Use be

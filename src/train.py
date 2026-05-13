@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 
 import torch
 import torch.nn as nn
@@ -21,6 +22,10 @@ dropout = 0.2
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 load_existing_model = True
+log_dir = Path("logs")
+log_dir.mkdir(exist_ok=True)
+run_id = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+log_path = log_dir / f"training_run_{run_id}.txt"
 
 torch.manual_seed(1337)
 
@@ -255,11 +260,16 @@ for step in range(max_iters):
 
     if step % eval_interval == 0:
         losses = estimate_loss()
-        print(
+        message = (
             f"step {step}: "
             f"train loss = {losses['train']:.4f}, "
             f"val loss = {losses['val']:.4f}"
         )
+
+        print(message)
+
+        with open(log_path, "a", encoding="utf-8") as log_file:
+            log_file.write(message + "\n")
 
     xb, yb = get_batch("train")
 
@@ -286,3 +296,8 @@ generated_text = decode(
 
 print("\nGenerated Text:")
 print(generated_text)
+
+with open(log_path, "a", encoding="utf-8") as log_file:
+    log_file.write("\nGenerated Text:\n")
+    log_file.write(generated_text)
+    log_file.write("\n")
