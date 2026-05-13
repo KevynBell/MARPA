@@ -17,6 +17,7 @@ eval_iters = 100
 n_embd = 64
 n_head = 4
 n_layer = 3
+temperature = 0.8
 
 dropout = 0.2
 
@@ -232,6 +233,7 @@ class AttentionLanguageModel(nn.Module):
 
             logits = logits[:, -1, :]
 
+            logits = logits / temperature
             probs = F.softmax(logits, dim=-1)
 
             idx_next = torch.multinomial(probs, num_samples=1)

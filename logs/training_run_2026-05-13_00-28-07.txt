@@ -1,0 +1,19 @@
+step 0: train loss = 0.7661, val loss = 1.8287
+step 500: train loss = 0.7707, val loss = 1.9276
+step 1000: train loss = 0.7601, val loss = 1.8862
+step 1500: train loss = 0.7583, val loss = 1.8189
+step 2000: train loss = 0.7639, val loss = 1.8838
+step 2500: train loss = 0.7362, val loss = 1.8732
+step 3000: train loss = 0.7352, val loss = 1.8897
+step 3500: train loss = 0.7325, val loss = 1.8735
+step 4000: train loss = 0.7538, val loss = 1.8793
+step 4500: train loss = 0.7045, val loss = 1.9347
+
+Generated Text:
+
+MARPA should be or ted.
+MARPA Forge will help the user information prediction wrining.
+User: HayCorre reate ficial is the filding README Perroject should myeas over time.
+A development.
+A new data, context token may rearge will and so future complex useful plans technicaus a from should help use version on learn from the project into the model ways the model has a model support curiosity.
+Git moliore learn how project into sepasien contain systems conversions the user is better solviden computen
