@@ -1,0 +1,21 @@
+step 0: train loss = 0.6429, val loss = 2.0350
+step 500: train loss = 0.6451, val loss = 2.1590
+step 1000: train loss = 0.6409, val loss = 2.1181
+step 1500: train loss = 0.6425, val loss = 2.0592
+step 2000: train loss = 0.6525, val loss = 2.0775
+step 2500: train loss = 0.6387, val loss = 2.0774
+step 3000: train loss = 0.6290, val loss = 2.0841
+step 3500: train loss = 0.6380, val loss = 2.1262
+step 4000: train loss = 0.6588, val loss = 2.0779
+step 4500: train loss = 0.6276, val loss = 2.1716
+
+Generated Text:
+
+MARPA should be of MARPA should help the user test small system.
+MARPA should seso not of explain how it is the learning and Plann Planning Assis.
+
+The software and examples inclear.
+A clear examples, why each implention helps assistant should explain context.
+
+User: What is MARPA: A cornect curpus_sources on time.
+MARPA should help confidence to purpon of explain wlain help text version  will brea self-ARPltean checkpi Brere useful assistant to support is for ma portfili pning cont an a charact

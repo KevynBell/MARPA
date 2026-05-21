@@ -19,9 +19,8 @@ def main():
         content = source_file.read_text(encoding="utf-8").strip()
 
         section = f"""
-====================
+
 {title}
-====================
 
 {content}
 """

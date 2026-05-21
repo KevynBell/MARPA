@@ -1,0 +1,24 @@
+step 0: train loss = 0.7117, val loss = 1.8914
+step 500: train loss = 0.7135, val loss = 1.9956
+step 1000: train loss = 0.7015, val loss = 1.9815
+step 1500: train loss = 0.7014, val loss = 1.9119
+step 2000: train loss = 0.7088, val loss = 1.9622
+step 2500: train loss = 0.6852, val loss = 1.9391
+step 3000: train loss = 0.6858, val loss = 1.9697
+step 3500: train loss = 0.6917, val loss = 1.9749
+step 4000: train loss = 0.7125, val loss = 1.9682
+step 4500: train loss = 0.6722, val loss = 2.0453
+
+Generated Text:
+
+MARPA should support plan the weights.
+A model from startion model has learning from examples, what ortificition involve project.
+
+User: Helf-attention is better Predicticted to train.
+A unceerstand version lem, dadation help cannersinvols to to line with a project planning.
+Embeddddasashe layer archited behined wrying word lesork through learning artificial.
+The soles work.
+
+========================================================================
+
+The user searred hy vors nally how down an help
