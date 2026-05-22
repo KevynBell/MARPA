@@ -1,0 +1,29 @@
+step 0: train loss = 1.0929, val loss = 1.6113
+step 500: train loss = 1.0494, val loss = 1.5711
+step 1000: train loss = 1.0063, val loss = 1.6524
+step 1500: train loss = 0.9921, val loss = 1.6342
+step 2000: train loss = 0.9735, val loss = 1.5921
+step 2500: train loss = 0.9433, val loss = 1.6049
+step 3000: train loss = 0.9414, val loss = 1.6630
+step 3500: train loss = 0.9139, val loss = 1.6666
+step 4000: train loss = 0.8865, val loss = 1.6726
+step 4500: train loss = 0.8881, val loss = 1.7257
+
+Generated Text:
+
+The user to train or thacks commiters.
+The varperiod stress.
+MARPA should help weity.
+
+User: Whe this information.
+A useful code o learning loss organizer fors.
+Ninch tranger lest or a will dile helping validation loss orges.
+A smalle mostred.
+The on error?
+MARPA: Start.
+Every reading weighttel step by step.
+The fileal intelligence.
+Each very inueatees progress ouses the model for.
+A track changes learned error, and used tentinueace.
+Make it clear.
+A checks loss maint more is from sagas over tim

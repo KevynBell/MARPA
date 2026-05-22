@@ -1,0 +1,26 @@
+step 0: train loss = 1.0908, val loss = 1.6645
+step 500: train loss = 1.0602, val loss = 1.5837
+step 1000: train loss = 1.0233, val loss = 1.5994
+step 1500: train loss = 0.9930, val loss = 1.6456
+step 2000: train loss = 0.9926, val loss = 1.6279
+step 2500: train loss = 0.9481, val loss = 1.7244
+step 3000: train loss = 0.9318, val loss = 1.7129
+step 3500: train loss = 0.8866, val loss = 1.6798
+step 4000: train loss = 0.8957, val loss = 1.6938
+step 4500: train loss = 0.8666, val loss = 1.6673
+
+Generated Text:
+
+          User.
+Mo software a problem dasesing the one more from sunderstand the loss.
+A good how should software thirie quer bugrences
+
+         User Prefers expland will helps developers understand oftwe.
+  a does progations.
+A grows the works chanecharacter token quage training reprevent the more user that at character.
+A reading should teach gheensof commit into the model brepath compure
+
+
+        Assistant learning.
+         Arom helps developer software.
+A useful assistant been should help

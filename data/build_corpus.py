@@ -18,12 +18,7 @@ def main():
 
         content = source_file.read_text(encoding="utf-8").strip()
 
-        section = f"""
-
-{title}
-
-{content}
-"""
+        section = f"{title}\n\n{content}\n\n"
         sections.append(section)
 
     OUTPUT_FILE.write_text(

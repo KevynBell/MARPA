@@ -1,0 +1,30 @@
+step 0: train loss = 0.8620, val loss = 1.7454
+step 500: train loss = 0.8378, val loss = 1.6940
+step 1000: train loss = 0.8507, val loss = 1.7582
+step 1500: train loss = 0.8095, val loss = 1.8055
+step 2000: train loss = 0.8237, val loss = 1.7751
+step 2500: train loss = 0.7898, val loss = 1.7651
+step 3000: train loss = 0.8128, val loss = 1.7480
+step 3500: train loss = 0.7920, val loss = 1.8622
+step 4000: train loss = 0.7935, val loss = 1.7139
+step 4500: train loss = 0.7537, val loss = 1.7725
+
+Generated Text:
+
+-ARPA Core text compare move retriable.
+The foundata tokens in stores in a methesis.
+
+User: MARPA, what is the learning from repeated examples, and avoid measure.
+MARPA should explain the issa corror back. ha assis.
+
+User: MARPA, what.
+The project.
+
+MARPA should help with down of empure tokens over time.
+
+User: MARPA, what is a tokens into text ughter pattention lehar.
+MARPA should help with a part matical prodents.
+MARPA should not meane.
+
+User of exampless.
+The helping function is a can idenci

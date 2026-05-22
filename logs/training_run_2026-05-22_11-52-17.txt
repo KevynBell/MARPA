@@ -1,0 +1,21 @@
+step 0: train loss = 0.8648, val loss = 1.7907
+step 500: train loss = 0.8679, val loss = 1.6787
+step 1000: train loss = 0.8447, val loss = 1.7214
+step 1500: train loss = 0.8333, val loss = 1.8001
+step 2000: train loss = 0.8280, val loss = 1.7566
+step 2500: train loss = 0.8000, val loss = 1.8333
+step 3000: train loss = 0.7981, val loss = 1.8088
+step 3500: train loss = 0.7711, val loss = 1.8084
+step 4000: train loss = 0.7742, val loss = 1.7859
+step 4500: train loss = 0.7665, val loss = 1.7914
+
+Generated Text:
+
+          User Pro ness many make the the modable or function is bethaper.
+The should readferen complexits writill skeey complexity.
+
+The bigram model care what the learning bashould avoid weartificial intelliger to token conceply.
+MARPA should explain error.
+An feedforward avoid writh
+       A more useful assistant workine MARPA Forgueds to the gheed process not the be modect fory use text the model loss.
+A stronver, the variable more next more will store sumber andable witted token and probugh

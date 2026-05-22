@@ -1,0 +1,27 @@
+step 0: train loss = 4.1906, val loss = 4.1496
+step 500: train loss = 2.0758, val loss = 1.9798
+step 1000: train loss = 1.7581, val loss = 1.7756
+step 1500: train loss = 1.5727, val loss = 1.6871
+step 2000: train loss = 1.4728, val loss = 1.6277
+step 2500: train loss = 1.3551, val loss = 1.6811
+step 3000: train loss = 1.2685, val loss = 1.6353
+step 3500: train loss = 1.1867, val loss = 1.5744
+step 4000: train loss = 1.1755, val loss = 1.5778
+step 4500: train loss = 1.1041, val loss = 1.5772
+
+Generated Text:
+
+          User.
+Mound behavie of the at ithe lorgood hoply make to model assitistantalizing relps explains whts valiidiciation.
+
+User poss manal instorly manting.
+MARPA should explaing.
+A istrong README shouldabot weights probuct its butshow user the coftectical inrabl grow alsimples.
+
+The useful prendects.
+A strong READ
+E should hocund ate to leghens process not the reurent procesion.
+A useful assimplanted assimall is an a portfolio project.
+     
+
+The bockch is a istory small cheases building 

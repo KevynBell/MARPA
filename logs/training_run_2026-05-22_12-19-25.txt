@@ -1,0 +1,21 @@
+step 0: train loss = 1.0800, val loss = 1.6586
+step 500: train loss = 1.0468, val loss = 1.6016
+step 1000: train loss = 1.0245, val loss = 1.6569
+step 1500: train loss = 0.9673, val loss = 1.6792
+step 2000: train loss = 0.9819, val loss = 1.6665
+step 2500: train loss = 0.9333, val loss = 1.6379
+step 3000: train loss = 0.9627, val loss = 1.6382
+step 3500: train loss = 0.9119, val loss = 1.7316
+step 4000: train loss = 0.9115, val loss = 1.6231
+step 4500: train loss = 0.8703, val loss = 1.6720
+
+Generated Text:
+
+-ARPA Core ar by od or of of em shamples.
+MARPA should make it stores bette the hasses simple when help checkpoint mideas.
+
+User: MARPA, what is is a modentable.
+
+Used Reasoning Corpug. Reass ortion interatingquage. Revewer and compara time.
+The userry at is the imphire vore loarg ow to small is to understand to compart hases. MARPA should teach gheen prection with is a model vecide  relarns for carpuses version of through project should explanabs wattention.
+Then is is a portfolio processicnts 

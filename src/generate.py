@@ -4,6 +4,8 @@ import torch
 
 from model import AttentionLanguageModel
 from tokenizer import load_text, build_tokenizer
+from memory_manager import load_project_notes
+
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 
@@ -18,23 +20,38 @@ model.eval()
 print("MARPA loaded.")
 print("Type 'quit' to exit.\n")
 
+project_notes = load_project_notes()
+print("Project memory loaded.\n")
+
 while True:
     prompt = input("You: ")
 
     if prompt.lower() == "quit":
         break
+    
+    full_prompt = f"""
+    Project Memory:
+    {project_notes}
+    
+    User:
+    {prompt}
+    
+    Marpa:
+    """
 
     context = torch.tensor(
-        [encode(prompt)],
+        [encode(full_prompt)],
         dtype=torch.long
     )
 
-    output = decode(
-        model.generate(
-            context,
-            max_new_tokens=300
-        )[0].tolist()
-    )
+    generated_tokens = model.generate(
+        context,
+        max_new_tokens=300
+    )[0].tolist()
+
+    new_tokens = generated_tokens[len(context[0]):]
+
+    output = decode(new_tokens)
 
     print("\nMARPA:")
     print(output)

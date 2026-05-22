@@ -1,0 +1,29 @@
+MARPA Project Notes
+
+MARPA stands for Memory-Augmented Reasoning and Planning Assistant.
+
+Current MARPA Core features:
+- Character-level tokenizer
+- PyTorch training pipeline
+- Checkpoint loading and saving
+- Modular corpus builder
+- Training logs
+- Temperature sampling
+- Multi-head attention
+- Stacked transformer blocks
+- Separate model, tokenizer, training, and chat modules
+- Interactive local chat loop
+
+Current goal:
+Build MARPA into a local AI development assistant that can help plan, debug, document, and build future portfolio projects.
+
+Near-term goals:
+- Add readable project memory
+- Add file search
+- Add tool commands
+- Add planning support
+- Add local model backend
+- Add RAG-style retrieval
+
+Design principle:
+MARPA should grow one layer at a time. Each feature should teach a concept and make the system easier to explain.
