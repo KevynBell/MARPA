@@ -5,6 +5,7 @@ import torch
 from model import AttentionLanguageModel
 from tokenizer import load_text, build_tokenizer
 from memory_manager import load_project_notes
+from tools import show_help, show_notes, show_status
 
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
@@ -25,9 +26,21 @@ print("Project memory loaded.\n")
 
 while True:
     prompt = input("You: ")
-
-    if prompt.lower() == "quit":
+    
+    if prompt.lower() == "/quit":
         break
+
+    if prompt.lower() == "/help":
+        print(show_help())
+        continue
+
+    if prompt.lower() == "/notes":
+        print(show_notes())
+        continue
+
+    if prompt.lower() == "/status":
+        print(show_status())
+        continue
     
     full_prompt = f"""
     Project Memory:
