@@ -1,4 +1,5 @@
 from pathlib import Path
+from memory_manager import load_project_notes, load_observations
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
 CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
@@ -12,6 +13,9 @@ MARPA Commands:
 /notes   Show project memory notes
 /status  Show project status
 /quit    Exit MARPA
+/observe <observation>  Save an observation to memory
+/observations  Show all saved observations
+/memory   Show project notes and observations
 """
 
 
@@ -32,4 +36,18 @@ Checkpoint: {checkpoint_status}
 Corpus: {corpus_status}
 Checkpoint path: {CHECKPOINT_PATH}
 Corpus path: {CORPUS_PATH}
+"""
+
+def show_memory():
+    notes = load_project_notes()
+    observations = load_observations()
+
+    return f"""
+MARPA Memory
+
+Project Notes:
+{notes}
+
+Observations:
+{observations}
 """

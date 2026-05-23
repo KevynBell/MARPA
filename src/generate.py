@@ -9,7 +9,7 @@ from memory_manager import (
     load_observations,
     save_observation
 )
-from tools import show_help, show_notes, show_status
+from tools import show_help, show_notes, show_status, show_memory
 
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
@@ -49,6 +49,10 @@ while True:
     
     if prompt.lower() == "/observations":
         print(load_observations())
+        continue
+    
+    if prompt.lower() == "/memory":
+        print(show_memory())
         continue
     
     if prompt.lower().startswith("/observe "):
