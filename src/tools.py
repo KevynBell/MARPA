@@ -16,6 +16,7 @@ MARPA Commands:
 /observe <observation>  Save an observation to memory
 /observations  Show all saved observations
 /memory   Show project notes and observations
+/history Show current session conversation history
 """
 
 

@@ -29,6 +29,9 @@ project_notes = load_project_notes()
 observations = load_observations()
 print("Project memory loaded.\n")
 
+conversation_history = []
+max_history_items = 6
+
 while True:
     prompt = input("You: ")
     
@@ -55,6 +58,13 @@ while True:
         print(show_memory())
         continue
     
+    if prompt.lower() == "/history":
+        if conversation_history:
+            print("\n".join(conversation_history))
+        else:
+            print("No conversation history yet.")
+        continue
+    
     if prompt.lower().startswith("/observe "):
         observation = prompt[9:].strip()
         print(save_observation(observation))
@@ -62,17 +72,22 @@ while True:
         continue
     
     
+    recent_history = "\n".join(conversation_history[-max_history_items:])
+
     full_prompt = f"""
     Project Memory:
     {project_notes}
-    
+
     Observations:
     {observations}
-    
+
+    Conversation History:
+    {recent_history}
+
     User:
     {prompt}
-    
-    Marpa:
+
+    MARPA:
     """
 
     context = torch.tensor(
@@ -92,3 +107,6 @@ while True:
     print("\nMARPA:")
     print(output)
     print()
+    
+    conversation_history.append(f"User: {prompt}")
+    conversation_history.append(f"MARPA: {output}")
