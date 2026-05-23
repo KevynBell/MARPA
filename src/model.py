@@ -141,8 +141,15 @@ class AttentionLanguageModel(nn.Module):
             loss = F.cross_entropy(logits, targets)
 
         return logits, loss
-
-    def generate(self, idx, max_new_tokens, temperature=0.8):
+    
+    
+    def generate(
+        self,
+        idx,
+        max_new_tokens,
+        temperature=0.8,
+        top_k=20
+    ):
         for _ in range(max_new_tokens):
             idx_cond = idx[:, -block_size:]
 
@@ -150,8 +157,16 @@ class AttentionLanguageModel(nn.Module):
             logits = logits[:, -1, :]
             logits = logits / temperature
 
-            probs = F.softmax(logits, dim=-1)
-            idx_next = torch.multinomial(probs, num_samples=1)
+            if top_k is not None:
+                top_k = min(top_k, logits.size(-1))
+
+                values, indices = torch.topk(logits, top_k, dim=-1)
+                probs = F.softmax(values, dim=-1)
+                sampled_index = torch.multinomial(probs, num_samples=1)
+                idx_next = torch.gather(indices, -1, sampled_index)
+            else:
+                probs = F.softmax(logits, dim=-1)
+                idx_next = torch.multinomial(probs, num_samples=1)
 
             idx = torch.cat((idx, idx_next), dim=1)
 

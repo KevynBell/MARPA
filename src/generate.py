@@ -98,6 +98,18 @@ while True:
     new_tokens = generated_tokens[len(context[0]):]
 
     output = decode(new_tokens)
+    
+    stop_patterns = [
+        "User:", 
+        "\n\n\n",
+    ]
+
+    for pattern in stop_patterns:
+        if pattern in output:
+            output = output.split(pattern)[0].strip()
+            
+    if not output:
+        output = "I am still forming a response."
 
     print("\nMARPA:")
     print(output)

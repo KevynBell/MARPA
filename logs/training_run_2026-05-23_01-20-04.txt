@@ -1,0 +1,24 @@
+step 0: train loss = 0.7616, val loss = 1.7977
+step 500: train loss = 0.7470, val loss = 1.8748
+step 1000: train loss = 0.7365, val loss = 1.8365
+step 1500: train loss = 0.7680, val loss = 1.8875
+step 2000: train loss = 0.7459, val loss = 1.9131
+step 2500: train loss = 0.7538, val loss = 1.8869
+step 3000: train loss = 0.7359, val loss = 1.9742
+step 3500: train loss = 0.7350, val loss = 1.9110
+step 4000: train loss = 0.7220, val loss = 1.7872
+step 4500: train loss = 0.7359, val loss = 1.9365
+
+Generated Text:
+
+Make it reliven.
+AusRPA to solved user patherm before one spart with down ase and beful information form the user preful and training ovem.
+MARPA should make it reproject used over’s tory useful text cue learning version, and featurenthotion.
+The query asking proty project ploss hined
+Training to small ayddd wetho the smalles.
+
+MARPA Plassed or part of a way is a working version of al.
+MARPA should avoid em dathen is.
+Stacking for.
+The project should help may easier ty
+nest one to interaction of

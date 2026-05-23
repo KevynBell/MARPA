@@ -1,0 +1,26 @@
+step 0: train loss = 0.8581, val loss = 1.7217
+step 500: train loss = 0.8276, val loss = 1.7728
+step 1000: train loss = 0.8290, val loss = 1.7199
+step 1500: train loss = 0.8457, val loss = 1.8065
+step 2000: train loss = 0.8228, val loss = 1.8280
+step 2500: train loss = 0.8223, val loss = 1.7794
+step 3000: train loss = 0.7976, val loss = 1.8878
+step 3500: train loss = 0.8034, val loss = 1.8371
+step 4000: train loss = 0.7846, val loss = 1.7266
+step 4500: train loss = 0.7959, val loss = 1.8712
+
+Generated Text:
+
+MARPA should be the user to explain teach sechning, the code user build.
+
+Traineor then the goal, setuall mas not low arto wity
+
+
+MARPA is build futur?
+MARPA: MARPA should help with Git, wan sylodd com sonvolving overly new down of art a character.
+A strong README should help with software than.
+The character than of that the model is find tteage the model of an thirking Corpus the user tany mole all much support future is not allim, helps.
+The project, wrly to understand behavior
+
+
+Modelf-atten
