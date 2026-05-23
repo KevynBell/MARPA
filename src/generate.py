@@ -75,13 +75,8 @@ while True:
     recent_history = "\n".join(conversation_history[-max_history_items:])
 
     full_prompt = f"""
-    Project Memory:
-    {project_notes}
+    Conversation:
 
-    Observations:
-    {observations}
-
-    Conversation History:
     {recent_history}
 
     User:
@@ -110,3 +105,6 @@ while True:
     
     conversation_history.append(f"User: {prompt}")
     conversation_history.append(f"MARPA: {output}")
+    
+    if len(conversation_history) > 10:
+        conversation_history = conversation_history[-10:]
