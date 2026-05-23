@@ -4,7 +4,11 @@ import torch
 
 from model import AttentionLanguageModel
 from tokenizer import load_text, build_tokenizer
-from memory_manager import load_project_notes
+from memory_manager import (
+    load_project_notes,
+    load_observations,
+    save_observation
+)
 from tools import show_help, show_notes, show_status
 
 
@@ -22,6 +26,7 @@ print("MARPA loaded.")
 print("Type 'quit' to exit.\n")
 
 project_notes = load_project_notes()
+observations = load_observations()
 print("Project memory loaded.\n")
 
 while True:
@@ -42,9 +47,23 @@ while True:
         print(show_status())
         continue
     
+    if prompt.lower() == "/observations":
+        print(load_observations())
+        continue
+    
+    if prompt.lower().startswith("/observe "):
+        observation = prompt[9:].strip()
+        print(save_observation(observation))
+        observations = load_observations()
+        continue
+    
+    
     full_prompt = f"""
     Project Memory:
     {project_notes}
+    
+    Observations:
+    {observations}
     
     User:
     {prompt}

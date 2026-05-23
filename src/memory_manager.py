@@ -12,3 +12,21 @@ def load_project_notes():
     return notes_path.read_text(
         encoding="utf-8"
     )
+    
+def load_observations():
+    observations_path = MEMORY_DIR / "observations.txt"
+
+    if not observations_path.exists():
+        return ""
+
+    return observations_path.read_text(
+        encoding="utf-8"
+    )
+    
+def save_observation(observation):
+    observations_path = MEMORY_DIR / "observations.txt"
+
+    with open(observations_path, "a", encoding="utf-8") as file:
+        file.write(f"\n{observation}\n")
+
+    return "Observation saved."
