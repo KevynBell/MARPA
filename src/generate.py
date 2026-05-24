@@ -9,7 +9,8 @@ from memory_manager import (
     load_observations,
     save_observation
 )
-from tools import show_help, show_notes, show_status, show_memory
+from tools import show_help, show_notes, show_status, show_memory, search_memory
+from retrieval import retrieve_memory
 
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
@@ -34,6 +35,7 @@ max_history_items = 6
 
 while True:
     prompt = input("You: ")
+    relevant_memory = retrieve_memory(prompt)
     
     if prompt.lower() == "/quit":
         break
@@ -58,6 +60,11 @@ while True:
         print(show_memory())
         continue
     
+    if prompt.lower().startswith("/search "):
+        query = prompt[8:].strip()
+        print(search_memory(query))
+        continue
+    
     if prompt.lower() == "/history":
         if conversation_history:
             print("\n".join(conversation_history))
@@ -75,8 +82,10 @@ while True:
     recent_history = "\n".join(conversation_history[-max_history_items:])
 
     full_prompt = f"""
-    Conversation:
+    Relevant Memory:
+    {relevant_memory}
 
+    Conversation:
     {recent_history}
 
     User:

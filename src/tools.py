@@ -1,5 +1,6 @@
 from pathlib import Path
 from memory_manager import load_project_notes, load_observations
+from retrieval import retrieve_memory
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
 CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
@@ -17,6 +18,7 @@ MARPA Commands:
 /observations  Show all saved observations
 /memory   Show project notes and observations
 /history Show current session conversation history
+/search <query>  Search MARPA memory
 """
 
 
@@ -51,4 +53,16 @@ Project Notes:
 
 Observations:
 {observations}
+"""
+
+def search_memory(query):
+    results = retrieve_memory(query)
+
+    if not results:
+        return "No matching memory found."
+
+    return f"""
+Memory Search Results:
+
+{results}
 """
