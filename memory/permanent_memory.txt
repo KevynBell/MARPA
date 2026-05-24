@@ -1,0 +1,2 @@
+MARPA Permanent Memory
+User wants MARPA to become a curiosity-driven local AI agent.

@@ -1,5 +1,10 @@
 from pathlib import Path
-from memory_manager import load_project_notes, load_observations
+from memory_manager import (
+    load_project_notes, 
+    load_observations,
+    load_permanent_memory
+)
+
 from retrieval import retrieve_memory
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
@@ -19,6 +24,8 @@ MARPA Commands:
 /memory   Show project notes and observations
 /history Show current session conversation history
 /search <query>  Search MARPA memory
+/remember <text>  Save permanent memory
+/recall           Show permanent memory
 """
 
 
@@ -66,3 +73,11 @@ Memory Search Results:
 
 {results}
 """
+
+def show_permanent_memory():
+    memory = load_permanent_memory()
+
+    if not memory:
+        return "No permanent memory found."
+
+    return memory

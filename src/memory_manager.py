@@ -30,3 +30,20 @@ def save_observation(observation):
         file.write(f"\n{observation}\n")
 
     return "Observation saved."
+
+def load_permanent_memory():
+    memory_path = MEMORY_DIR / "permanent_memory.txt"
+
+    if not memory_path.exists():
+        return ""
+
+    return memory_path.read_text(encoding="utf-8")
+
+
+def save_memory(memory_item):
+    memory_path = MEMORY_DIR / "permanent_memory.txt"
+
+    with open(memory_path, "a", encoding="utf-8") as file:
+        file.write(f"\n{memory_item}\n")
+
+    return "Memory saved."

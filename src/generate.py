@@ -7,9 +7,20 @@ from tokenizer import load_text, build_tokenizer
 from memory_manager import (
     load_project_notes,
     load_observations,
-    save_observation
+    save_observation,
+    load_permanent_memory,
+    save_memory,
 )
-from tools import show_help, show_notes, show_status, show_memory, search_memory
+
+from tools import (
+    show_help, 
+    show_notes, 
+    show_status, 
+    show_memory, 
+    search_memory,
+    show_permanent_memory,
+)
+
 from retrieval import retrieve_memory
 
 
@@ -70,6 +81,15 @@ while True:
             print("\n".join(conversation_history))
         else:
             print("No conversation history yet.")
+        continue
+    
+    if prompt.lower().startswith("/remember "):
+        memory_item = prompt[10:].strip()
+        print(save_memory(memory_item))
+        continue
+
+    if prompt.lower() == "/recall":
+        print(show_permanent_memory())
         continue
     
     if prompt.lower().startswith("/observe "):
