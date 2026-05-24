@@ -5,7 +5,7 @@ from memory_manager import (
     load_permanent_memory
 )
 from file_tools import read_project_file
-
+from project_search import search_project_files
 from retrieval import retrieve_memory
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
@@ -28,6 +28,7 @@ MARPA Commands:
 /remember <text>  Save permanent memory
 /recall           Show permanent memory
 /read <path>  Read a project file
+/searchfiles <query>  Search project files
 """
 
 
@@ -86,3 +87,6 @@ def show_permanent_memory():
 
 def read_file(file_path):
     return read_project_file(file_path)
+
+def search_files(query):
+    return search_project_files(query)

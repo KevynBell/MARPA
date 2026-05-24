@@ -20,6 +20,7 @@ from tools import (
     search_memory,
     show_permanent_memory,
     read_file,
+    search_files
 )
 
 from retrieval import retrieve_memory
@@ -102,6 +103,15 @@ while True:
     if prompt.lower().startswith("/read "):
         file_path = prompt[6:].strip()
         print(read_file(file_path))
+        continue
+    
+    if prompt.lower().startswith("/searchfiles "):
+        query = prompt[13:].strip()
+
+        print(
+            search_files(query)
+        )
+
         continue
     
     
