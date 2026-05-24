@@ -19,6 +19,7 @@ from tools import (
     show_memory, 
     search_memory,
     show_permanent_memory,
+    read_file,
 )
 
 from retrieval import retrieve_memory
@@ -96,6 +97,11 @@ while True:
         observation = prompt[9:].strip()
         print(save_observation(observation))
         observations = load_observations()
+        continue
+    
+    if prompt.lower().startswith("/read "):
+        file_path = prompt[6:].strip()
+        print(read_file(file_path))
         continue
     
     

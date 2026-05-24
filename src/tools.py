@@ -4,6 +4,7 @@ from memory_manager import (
     load_observations,
     load_permanent_memory
 )
+from file_tools import read_project_file
 
 from retrieval import retrieve_memory
 
@@ -26,6 +27,7 @@ MARPA Commands:
 /search <query>  Search MARPA memory
 /remember <text>  Save permanent memory
 /recall           Show permanent memory
+/read <path>  Read a project file
 """
 
 
@@ -81,3 +83,6 @@ def show_permanent_memory():
         return "No permanent memory found."
 
     return memory
+
+def read_file(file_path):
+    return read_project_file(file_path)
