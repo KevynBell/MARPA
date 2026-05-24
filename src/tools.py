@@ -29,6 +29,7 @@ MARPA Commands:
 /recall           Show permanent memory
 /read <path>  Read a project file
 /searchfiles <query>  Search project files
+/inspect <query>  Search project files and preview the first match
 """
 
 
@@ -90,3 +91,20 @@ def read_file(file_path):
 
 def search_files(query):
     return search_project_files(query)
+
+def inspect_project_file(query):
+    results = search_project_files(query)
+
+    if results == "No matching files found.":
+        return results
+
+    first_file = results.splitlines()[0]
+    file_content = read_project_file(first_file)
+
+    return f"""
+First matching file:
+{first_file}
+
+Preview:
+{file_content}
+"""

@@ -13,6 +13,7 @@ from memory_manager import (
 )
 
 from tools import (
+    inspect_project_file,
     show_help, 
     show_notes, 
     show_status, 
@@ -20,7 +21,8 @@ from tools import (
     search_memory,
     show_permanent_memory,
     read_file,
-    search_files
+    search_files,
+    inspect_project_file,
 )
 
 from retrieval import retrieve_memory
@@ -112,6 +114,11 @@ while True:
             search_files(query)
         )
 
+        continue
+    
+    if prompt.lower().startswith("/inspect "):
+        query = prompt[9:].strip()
+        print(inspect_project_file(query))
         continue
     
     
