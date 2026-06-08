@@ -3,6 +3,7 @@ from project_search import search_project_files
 from file_tools import read_project_file
 from datetime import datetime
 from pathlib import Path
+from memory_manager import save_observation
 
 AGENT_RUNS_PATH = Path("memory/agent_runs.txt")
 
@@ -108,6 +109,16 @@ def choose_next_action(action_result):
     return None
 
 
+def create_execution_observation(goal, selected_file, observation):
+    if observation != "Action completed.":
+        return None
+
+    return (
+        f"MARPA executed the goal '{goal}', "
+        f"selected '{selected_file}', and completed the action successfully."
+    )
+
+
 def execute_goal(goal):
 
     plan = think(goal)
@@ -124,6 +135,15 @@ def execute_goal(goal):
         next_result = read_project_file(next_file)
 
     summary = ""
+
+    execution_observation = create_execution_observation(
+    goal,
+    next_file,
+    observation
+)
+
+    if execution_observation:
+        save_observation(execution_observation)
 
     if next_file:
         summary = summarize_result(next_file, next_result)

@@ -9,6 +9,7 @@ from tools import (
     plan_goal,
     execute_goal_tool,
 )
+from memory_manager import load_observations
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 
@@ -83,6 +84,12 @@ while True:
         if len(conversation_history) > max_history_items:
             conversation_history = conversation_history[-max_history_items:]
 
+        continue
+
+    if prompt.lower() == "/observations":
+        print("\nMARPA:")
+        print(load_observations())
+        print()
         continue
 
     output = decode(
