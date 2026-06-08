@@ -24,12 +24,10 @@ def route_prompt(prompt):
         goal = prompt[len("plan "):].strip()
         return plan_goal(goal)
     
-    if "status" in lowered:
-        return show_status()
-
-    if "memory" in lowered or "remember" in lowered:
-        return show_memory()
-
+    if lowered.startswith("/read "):
+        file_path = prompt[len("/read "):].strip()
+        return read_file(file_path)
+    
     if lowered.startswith("read file "):
         file_path = prompt[len("read file "):].strip()
         return read_file(file_path)
@@ -37,5 +35,11 @@ def route_prompt(prompt):
     if lowered.startswith("inspect "):
         query = prompt[len("inspect "):].strip()
         return inspect_project_file(query)
+    
+    if "status" in lowered:
+        return show_status()
+
+    if "memory" in lowered or "remember" in lowered:
+        return show_memory()
 
     return None

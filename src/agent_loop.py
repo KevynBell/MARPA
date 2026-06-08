@@ -1,6 +1,10 @@
 from planner import create_plan
 from project_search import search_project_files
 from file_tools import read_project_file
+from datetime import datetime
+from pathlib import Path
+
+AGENT_RUNS_PATH = Path("memory/agent_runs.txt")
 
 
 def think(goal):
@@ -44,6 +48,16 @@ def observe(result):
         return "Action failed."
 
     return "Action completed."
+
+def save_agent_run(report):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open(AGENT_RUNS_PATH, "a", encoding="utf-8") as file:
+        file.write("\n\n")
+        file.write(f"Run Timestamp: {timestamp}\n")
+        file.write(report)
+
+    return report
 
 
 def summarize_result(file_path, file_content):
@@ -114,7 +128,7 @@ def execute_goal(goal):
     if next_file:
         summary = summarize_result(next_file, next_result)
 
-    return f"""
+    report = f"""
 === MARPA ACTION REPORT ===
 
 Goal:
@@ -137,3 +151,5 @@ Observation:
 
 {summary}
 """
+
+    return save_agent_run(report)
