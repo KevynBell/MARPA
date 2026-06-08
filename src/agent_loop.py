@@ -46,42 +46,28 @@ def observe(result):
     return "Action completed."
 
 
-def execute_goal(goal):
+def summarize_result(file_path, file_content):
+    if not file_content:
+        return "No content available to summarize."
 
-    plan = think(goal)
+    lines = file_content.splitlines()
+    non_empty_lines = [
+        line.strip()
+        for line in lines
+        if line.strip()
+    ]
 
-    action_result = act(goal)
-
-    observation = observe(action_result)
-
-    next_file = choose_next_action(action_result)
-
-    next_result = ""
-
-    if next_file:
-        next_result = read_project_file(next_file)
+    preview = "\n".join(non_empty_lines[:8])
 
     return f"""
-=== PLAN ===
+Summary:
+Read {file_path}.
+The file contains {len(non_empty_lines)} non-empty lines.
 
-{plan}
-
-=== ACTION RESULT ===
-
-{action_result}
-
-=== OBSERVATION ===
-
-{observation}
-
-=== NEXT ACTION ===
-
-Read: {next_file}
-
-=== RESULT ===
-
-{next_result}
+Preview of key content:
+{preview}
 """
+
 
 def choose_next_action(action_result):
     if action_result == "No matching files found.":
@@ -106,3 +92,48 @@ def choose_next_action(action_result):
         return files[0]
 
     return None
+
+
+def execute_goal(goal):
+
+    plan = think(goal)
+
+    action_result = act(goal)
+
+    observation = observe(action_result)
+
+    next_file = choose_next_action(action_result)
+
+    next_result = ""
+
+    if next_file:
+        next_result = read_project_file(next_file)
+
+    summary = ""
+
+    if next_file:
+        summary = summarize_result(next_file, next_result)
+
+    return f"""
+=== MARPA ACTION REPORT ===
+
+Goal:
+{goal}
+
+Plan:
+{plan}
+
+Actions Taken:
+1. Searched project files for relevant matches.
+2. Selected the most relevant file to inspect.
+3. Read the selected file in the background.
+4. Summarized the result.
+
+Selected File:
+{next_file}
+
+Observation:
+{observation}
+
+{summary}
+"""
