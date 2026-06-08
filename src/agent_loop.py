@@ -120,7 +120,7 @@ def execute_goal(goal):
 Goal:
 {goal}
 
-Plan:
+Planning Output:
 {plan}
 
 Actions Taken:

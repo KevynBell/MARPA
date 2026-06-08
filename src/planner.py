@@ -5,9 +5,6 @@ TASKS_PATH = Path("memory/tasks.txt")
 
 def create_plan(goal):
     plan = [
-        f"Goal: {goal}",
-        "",
-        "Plan:",
         "1. Define the desired outcome.",
         "2. Identify the current state.",
         "3. Break the goal into small tasks.",
