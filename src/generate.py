@@ -18,16 +18,36 @@ model.eval()
 print("MARPA loaded.")
 print("Type 'quit' to exit.\n")
 
+conversation_history = []
+max_history_items = 10
+
 while True:
     prompt = input("You: ")
 
-    if prompt.lower() == "quit":
+    if prompt.lower() in ["/quit", "quit", "exit"]:
         break
 
     context = torch.tensor(
         [encode(prompt)],
         dtype=torch.long
     )
+
+    if prompt.lower() == "what did i just ask?":
+        last_user_messages = [
+            item for item in conversation_history
+            if item.startswith("User:")
+        ]
+
+        if last_user_messages:
+            print(
+                last_user_messages[-1]
+                .replace("User:", "")
+                .strip()
+            )
+        else:
+            print("You have not asked anything yet.")
+
+        continue
 
     output = decode(
         model.generate(
@@ -36,6 +56,16 @@ while True:
         )[0].tolist()
     )
 
+    if output.startswith(prompt):
+        output = output[len(prompt):].strip()
+
     print("\nMARPA:")
     print(output)
+
+    conversation_history.append(f"User: {prompt}")
+    conversation_history.append(f"MARPA: {output}")
+
+    if len(conversation_history) > max_history_items:
+        conversation_history = conversation_history[-max_history_items:]
+    
     print()

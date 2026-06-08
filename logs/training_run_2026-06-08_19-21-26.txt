@@ -1,0 +1,20 @@
+step 0: train loss = 1.1005, val loss = 1.5941
+step 500: train loss = 1.0748, val loss = 1.6763
+step 1000: train loss = 1.0473, val loss = 1.6262
+step 1500: train loss = 1.0348, val loss = 1.6269
+step 2000: train loss = 1.0142, val loss = 1.6943
+step 2500: train loss = 0.9753, val loss = 1.6696
+step 3000: train loss = 0.9523, val loss = 1.6508
+step 3500: train loss = 0.9229, val loss = 1.6919
+step 4000: train loss = 0.9134, val loss = 1.7157
+step 4500: train loss = 0.9019, val loss = 1.6660
+
+Generated Text:
+
+
+Probsem mel more more best should explain a stant when a hork.
+Git eackport for stfol, model previewed tokens.
+A that t should explain I ty.
+MARPA Forges, what is th a caracter sta Find thciation of MARPA project measing attence the model from sedforwa, id atant ideas confirm to interalligencest to loon contept.
+MARPA useful assistanting.
+MARPA should proving MARPA and whilp test tokens compareful for artificial intelligence callows problems should suall help informment it a clearn and eassist 

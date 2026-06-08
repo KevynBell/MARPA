@@ -1,0 +1,22 @@
+step 0: train loss = 4.1760, val loss = 4.1513
+step 500: train loss = 2.1295, val loss = 2.0988
+step 1000: train loss = 1.7990, val loss = 1.8434
+step 1500: train loss = 1.6211, val loss = 1.7333
+step 2000: train loss = 1.5219, val loss = 1.7038
+step 2500: train loss = 1.3867, val loss = 1.6431
+step 3000: train loss = 1.2990, val loss = 1.6016
+step 3500: train loss = 1.2168, val loss = 1.6357
+step 4000: train loss = 1.1750, val loss = 1.6323
+step 4500: train loss = 1.1340, val loss = 1.5784
+
+Generated Text:
+
+MARPA: MARPA is of A to preful and that the model more languak.
+MARPA should be mak it the project should usepue cturent happens oftO.
+MARPA shoulp thoughtion is tram moding text to corpus changed onted the clearning seplowers.
+A strong manation ideas to looks.
+Thing ful first that,
+ run foun this of text developments.
+MARPA should explan.
+MARPA Cores, and that to imporamment help the assisistan.
+Scorpus the token improvement fales stead bugces ful assistand becons nat ask it clearn kleae lening

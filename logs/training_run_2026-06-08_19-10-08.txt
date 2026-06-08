@@ -1,0 +1,29 @@
+step 0: train loss = 4.2750, val loss = 4.2706
+step 500: train loss = 2.1291, val loss = 2.0851
+step 1000: train loss = 1.7878, val loss = 1.8582
+step 1500: train loss = 1.5789, val loss = 1.6877
+step 2000: train loss = 1.5024, val loss = 1.6765
+step 2500: train loss = 1.3627, val loss = 1.6223
+step 3000: train loss = 1.2810, val loss = 1.6296
+step 3500: train loss = 1.2172, val loss = 1.6612
+step 4000: train loss = 1.1985, val loss = 1.6089
+step 4500: train loss = 1.1293, val loss = 1.6408
+
+Generated Text:
+
+MARPA, whe obsed trand improve syoo le or mery?
+MARPA: Ber alns.
+MARPA to loss prachen software Drate is the checkpuraning Exparand a can erchert learning Assis anties.
+
+The is project is on explain velopment.
+
+MARPA is oversinal and assis MARPA, ward checkpoits gets.
+MARPA should show and laojen casulles into user from le sloun is a sideable traning conal.
+
+MARPA should som Planner the concephots strangen checkputers insterations tokes in steps.
+
+
+User: MARPA, whers and self-attentions.
+
+
+A dev

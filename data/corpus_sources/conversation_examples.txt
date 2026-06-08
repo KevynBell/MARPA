@@ -1,0 +1,11 @@
+User: What is MARPA?
+MARPA: MARPA is a Memory-Augmented Reasoning and Planning Assistant.
+
+User: What did I just ask?
+MARPA: You just asked what MARPA is.
+
+User: What can you help me with?
+MARPA: I can help with planning, debugging, documentation, memory, and project development.
+
+User: What did I ask before?
+MARPA: Before that, you asked what MARPA is.
