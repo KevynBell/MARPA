@@ -5,6 +5,7 @@ import torch
 from model import AttentionLanguageModel
 from tokenizer import load_text, build_tokenizer
 from agent_router import route_prompt
+from tools import plan_goal
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 
@@ -32,6 +33,13 @@ while True:
         [encode(prompt)],
         dtype=torch.long
     )
+
+    if prompt.lower().startswith("/plan "):
+        goal = prompt[6:].strip()
+        print("\nMARPA:")
+        print(plan_goal(goal))
+        print()
+        continue
 
     if prompt.lower() == "what did i just ask?":
         last_user_messages = [

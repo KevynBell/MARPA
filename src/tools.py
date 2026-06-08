@@ -7,6 +7,7 @@ from memory_manager import (
 from file_tools import read_project_file
 from project_search import search_project_files
 from retrieval import retrieve_memory
+from planner import save_plan
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
 CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
@@ -30,6 +31,7 @@ MARPA Commands:
 /read <path>  Read a project file
 /searchfiles <query>  Search project files
 /inspect <query>  Search project files and preview the first match
+/plan <goal>  Create and save a simple plan
 """
 
 
@@ -108,3 +110,6 @@ First matching file:
 Preview:
 {file_content}
 """
+
+def plan_goal(goal):
+    return save_plan(goal)

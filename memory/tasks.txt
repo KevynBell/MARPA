@@ -1,0 +1,23 @@
+MARPA Task List
+
+Goal: Add API support to MARPA
+
+Plan:
+1. Define the desired outcome.
+2. Identify the current state.
+3. Break the goal into small tasks.
+4. Complete the first task.
+5. Test the result.
+6. Record observations.
+7. Decide the next improvement.
+
+Goal: Add API support to MARPA
+
+Plan:
+1. Define the desired outcome.
+2. Identify the current state.
+3. Break the goal into small tasks.
+4. Complete the first task.
+5. Test the result.
+6. Record observations.
+7. Decide the next improvement.

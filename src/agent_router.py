@@ -5,6 +5,7 @@ from tools import (
     inspect_project_file,
     show_memory,
     show_status,
+    plan_goal,
 )
 
 
@@ -18,6 +19,10 @@ def route_prompt(prompt):
     if lowered.startswith("search files for "):
         query = prompt[len("search files for "):].strip()
         return search_files(query)
+    
+    if lowered.startswith("plan "):
+        goal = prompt[len("plan "):].strip()
+        return plan_goal(goal)
     
     if "status" in lowered:
         return show_status()
