@@ -8,6 +8,7 @@ from file_tools import read_project_file
 from project_search import search_project_files
 from retrieval import retrieve_memory
 from planner import save_plan
+from agent_loop import execute_goal
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
 CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
@@ -32,6 +33,7 @@ MARPA Commands:
 /searchfiles <query>  Search project files
 /inspect <query>  Search project files and preview the first match
 /plan <goal>  Create and save a simple plan
+/execute <goal>  Run a think-act-observe cycle
 """
 
 
@@ -113,3 +115,6 @@ Preview:
 
 def plan_goal(goal):
     return save_plan(goal)
+
+def execute_goal_tool(goal):
+    return execute_goal(goal)
