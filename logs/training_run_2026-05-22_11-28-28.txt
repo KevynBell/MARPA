@@ -1,0 +1,38 @@
+step 0: train loss = 4.2829, val loss = 4.2588
+step 500: train loss = 2.0861, val loss = 2.0346
+step 1000: train loss = 1.7454, val loss = 1.8504
+step 1500: train loss = 1.5728, val loss = 1.7221
+step 2000: train loss = 1.4676, val loss = 1.6749
+step 2500: train loss = 1.3477, val loss = 1.6139
+step 3000: train loss = 1.2875, val loss = 1.6231
+step 3500: train loss = 1.2194, val loss = 1.5839
+step 4000: train loss = 1.1365, val loss = 1.6081
+step 4500: train loss = 1.1423, val loss = 1.6560
+
+Generated Text:
+
+
+User: MARPA to shoughts.
+Tractersers.
+MARPA concept.
+Every courpuses time orward fore produce er.
+MARPA learns alleas alle project mesis to smallys, and works.
+Nince
+
+        
+
+
+        
+
+
+         A devaliders bethest it should help model informence.
+          
+
+          A MARPA should help witht at fimors too share presiove.
+Every inned model mases progress obser to main learn.
+A tone work.
+
+To            
+
+            As allass.
+A useful corme a progres the model more inte rermizes garesis 

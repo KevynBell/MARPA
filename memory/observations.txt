@@ -1,0 +1,17 @@
+MARPA Observations
+
+Adding stacked transformer blocks improved learning speed.
+
+Separating train.py and generate.py created a cleaner architecture.
+
+Project memory successfully influences prompt generation.
+
+Formatting inside the corpus strongly affects generated output.
+
+Removing decorative symbols improved response quality.
+
+The user learns best through implementation and explanation.
+
+Small improvements create meaningful progress over time.
+
+MARPA can now save observations from the chat loop.

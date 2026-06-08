@@ -1,0 +1,27 @@
+step 0: train loss = 4.1892, val loss = 4.1615
+step 500: train loss = 2.0832, val loss = 2.0123
+step 1000: train loss = 1.7854, val loss = 1.7991
+step 1500: train loss = 1.5579, val loss = 1.7224
+step 2000: train loss = 1.4347, val loss = 1.6843
+step 2500: train loss = 1.3331, val loss = 1.6134
+step 3000: train loss = 1.3155, val loss = 1.5921
+step 3500: train loss = 1.2172, val loss = 1.6720
+step 4000: train loss = 1.1761, val loss = 1.5434
+step 4500: train loss = 1.1120, val loss = 1.5862
+
+Generated Text:
+
+PyThen a quartitime.
+MARPA should help the comprements mageed typothe is a concept.
+To li skplaing.
+
+Users to undersions que reads tasees the in contept.
+A step the loss teate the large project Plans better is large progres and compare the prenfolio se ave time.
+Core.
+
+User: MARPA should make it tokens compuctions.
+
+User: Python and is a titte legheen process.
+MARPA Core fiture and reable where into the user terns to reduce leas not morte gatted when inctice.
+
+A useful a working a version improv

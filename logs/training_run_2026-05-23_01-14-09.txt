@@ -1,0 +1,26 @@
+step 0: train loss = 1.0672, val loss = 1.6120
+step 500: train loss = 1.0169, val loss = 1.6709
+step 1000: train loss = 1.0073, val loss = 1.6260
+step 1500: train loss = 1.0053, val loss = 1.6902
+step 2000: train loss = 0.9707, val loss = 1.6785
+step 2500: train loss = 0.9632, val loss = 1.6786
+step 3000: train loss = 0.9240, val loss = 1.7622
+step 3500: train loss = 0.9182, val loss = 1.7148
+step 4000: train loss = 0.8900, val loss = 1.6405
+step 4500: train loss = 0.9048, val loss = 1.7959
+
+Generated Text:
+
+MARPA should explain what should explain loty text, and fittion toong RExage model procomplex.
+The user is build an of MARPA to ured prefor future that is a perfuction, the ples in works tools working.
+MARPA to corpus?
+MARPA: The likens.
+
+
+The user lly context and lets too project token test one once.
+MARPA is. Toject should sumple to explain support one it with tools help with a lookpo smalles should help the model prediction?
+MARPA: Training Corpus work.
+A goow hypothing.
+
+
+Traininto be suck b

@@ -1,0 +1,24 @@
+step 0: train loss = 4.1050, val loss = 4.0939
+step 500: train loss = 2.0474, val loss = 2.0440
+step 1000: train loss = 1.7847, val loss = 1.8045
+step 1500: train loss = 1.6047, val loss = 1.7545
+step 2000: train loss = 1.4722, val loss = 1.6989
+step 2500: train loss = 1.3681, val loss = 1.6602
+step 3000: train loss = 1.2656, val loss = 1.6612
+step 3500: train loss = 1.1975, val loss = 1.6429
+step 4000: train loss = 1.1519, val loss = 1.5533
+step 4500: train loss = 1.1317, val loss = 1.6985
+
+Generated Text:
+
+MARPA should help most uselp version, and whythts improve user what is avoid tokens into project should be em development allows feed smetting from should velopery model weige.
+
+
+Tent ols tokent future to careful matteraining the weights each weigights user token conclure, is a weights to explans.
+
+
+
+The up version inflach.
+
+User: MARPA, be lock auild each developers not and uses caum.
+MARPA should explain how what the model plaining from and atas. iddid bile goo elps tokey alle, time, the lowe 

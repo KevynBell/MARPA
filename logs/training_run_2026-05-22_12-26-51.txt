@@ -1,0 +1,32 @@
+step 0: train loss = 0.7541, val loss = 1.8695
+step 500: train loss = 0.7394, val loss = 1.7937
+step 1000: train loss = 0.7555, val loss = 1.8350
+step 1500: train loss = 0.7288, val loss = 1.8983
+step 2000: train loss = 0.7420, val loss = 1.8740
+step 2500: train loss = 0.7128, val loss = 1.8552
+step 3000: train loss = 0.7472, val loss = 1.8257
+step 3500: train loss = 0.7315, val loss = 1.9421
+step 4000: train loss = 0.7224, val loss = 1.7876
+step 4500: train loss = 0.6900, val loss = 1.8307
+
+Generated Text:
+
+Pythen is ma may better meashes in heapp.
+
+User: MARPA, why is step.
+The user is validation is project.
+Thest is the line model explanation.
+The project should be a concept.
+
+A small allode training step.
+A time.
+
+User: MARPA, what is a subwods.
+Backpong conthing Corre goal bodu arre wild improvements.
+
+Used a model beging.
+MARPA Forge with Pythognes.
+MARPA should help with dovement should help with eversion time.
+MARPA should I do loo next with step by step.
+
+User: MARPA, when is a model is not
