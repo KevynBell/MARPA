@@ -25,6 +25,12 @@ def load_observations():
     
 def save_observation(observation):
     observations_path = MEMORY_DIR / "observations.txt"
+    
+    if observations_path.exists():
+        existing_text = observations_path.read_text(encoding="utf-8")
+
+        if observation in existing_text:
+            return "Observation already exists."
 
     with open(observations_path, "a", encoding="utf-8") as file:
         file.write(f"\n{observation}\n")

@@ -126,6 +126,8 @@ def choose_next_action(action_result):
 def create_execution_observation(goal, selected_file, observation):
     if observation != "Action completed.":
         return None
+    
+    normalized_file = selected_file.replace("\\", "/")
 
     return (
         f"MARPA executed the goal '{goal}', "
