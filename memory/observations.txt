@@ -17,3 +17,7 @@ Small improvements create meaningful progress over time.
 MARPA can now save observations from the chat loop.
 
 MARPA executed the goal 'Find files related to memory', selected 'memory/project_notes.txt', and completed the action successfully.
+
+MARPA executed the goal 'Find files related to memory', selected 'memory\agent_runs.txt', and completed the action successfully.
+
+MARPA executed the goal 'Find files related to memory', selected 'memory\project_notes.txt', and completed the action successfully.

@@ -90,20 +90,34 @@ def choose_next_action(action_result):
 
     files = action_result.splitlines()
 
+    preferred_files = [
+        "memory/project_notes.txt",
+        "memory/permanent_memory.txt",
+        "memory/observations.txt",
+        "memory/agent_runs.txt",
+    ]
+
     preferred_folders = [
         "memory/",
         "data/corpus_sources/",
         "src/",
     ]
 
+    for preferred_file in preferred_files:
+        for result_file in files:
+            normalized_file = result_file.replace("\\", "/")
+
+            if normalized_file == preferred_file:
+                return result_file
+
     for folder in preferred_folders:
-        for file in files:
-            normalized_file = file.replace("\\", "/")
+        for result_file in files:
+            normalized_file = result_file.replace("\\", "/")
 
             if normalized_file.startswith(folder):
-                return file
+                return result_file
 
-    if len(files) > 0:
+    if files:
         return files[0]
 
     return None
