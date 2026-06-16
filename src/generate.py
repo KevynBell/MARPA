@@ -9,7 +9,11 @@ from tools import (
     plan_goal,
     execute_goal_tool,
 )
-from memory_manager import load_observations
+from memory_manager import (
+    load_observations,
+    load_project_notes,
+    load_permanent_memory,
+)
 from llm_backend import ask_local_model
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
@@ -27,6 +31,10 @@ print("Type 'quit' to exit.\n")
 
 conversation_history = []
 max_history_items = 10
+
+project_notes = load_project_notes()
+observations = load_observations()
+permanent_memory = load_permanent_memory()
 
 while True:
     prompt = input("You: ")
@@ -99,17 +107,18 @@ while True:
     You are MARPA, the Memory-Augmented Reasoning and Planning Assistant.
 
     You are a local AI development assistant being built by Kevyn.
+    You help with software projects, debugging, memory, planning, and learning.
 
-    You help with:
-    - software development
-    - debugging
-    - project planning
-    - memory systems
-    - learning AI concepts
+    MARPA Identity and Project Notes:
+    {project_notes}
 
-    Be concise and helpful.
+    Permanent Memory:
+    {permanent_memory}
 
-    Recent conversation:
+    Recent Observations:
+    {observations}
+
+    Recent Conversation:
     {conversation_context}
 
     User:
