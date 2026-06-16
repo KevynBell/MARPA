@@ -10,6 +10,7 @@ from tools import (
     execute_goal_tool,
 )
 from memory_manager import load_observations
+from llm_backend import ask_local_model
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 
@@ -92,16 +93,33 @@ while True:
         print()
         continue
 
-    output = decode(
-        model.generate(
-            context,
-            max_new_tokens=300
-        )[0].tolist()
-    )
+    conversation_context = "\n".join(conversation_history[-6:])
 
-    if output.startswith(prompt):
-        output = output[len(prompt):].strip()
+    conversation_prompt = f"""
+    You are MARPA, the Memory-Augmented Reasoning and Planning Assistant.
 
+    You are a local AI development assistant being built by Kevyn.
+
+    You help with:
+    - software development
+    - debugging
+    - project planning
+    - memory systems
+    - learning AI concepts
+
+    Be concise and helpful.
+
+    Recent conversation:
+    {conversation_context}
+
+    User:
+    {prompt}
+
+    MARPA:
+    """
+
+    output = ask_local_model(conversation_prompt)
+    
     print("\nMARPA:")
     print(output)
 
