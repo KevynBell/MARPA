@@ -39,7 +39,19 @@ def route_prompt(prompt):
     if "status" in lowered:
         return show_status()
 
-    if "memory" in lowered or "remember" in lowered:
+    if lowered in ["/memory", "show memory", "show your memory"]:
         return show_memory()
+    
+    if lowered in ["what is marpa?", "what is marpa"]:
+        return (
+            "MARPA is a Memory-Augmented Reasoning and Planning Assistant. "
+            "It is being built as a local AI development assistant with memory, planning, tools, and project support."
+        )
+
+    if lowered in ["what can you do?", "what can you do"]:
+        return (
+            "I can search files, read files, inspect project files, save observations, remember information, "
+            "plan tasks, and run simple agent actions."
+        )
 
     return None

@@ -1,0 +1,31 @@
+step 0: train loss = 4.2424, val loss = 4.2091
+step 500: train loss = 1.8448, val loss = 2.1689
+step 1000: train loss = 1.4956, val loss = 2.0340
+step 1500: train loss = 1.1330, val loss = 2.0355
+step 2000: train loss = 0.8890, val loss = 2.0708
+step 2500: train loss = 0.6594, val loss = 2.1132
+step 3000: train loss = 0.5174, val loss = 2.2761
+step 3500: train loss = 0.4017, val loss = 2.4265
+step 4000: train loss = 0.3139, val loss = 2.4850
+step 4500: train loss = 0.2645, val loss = 2.6944
+
+Generated Text:
+
+
+MARPA: You just ask?
+MARPA: You just aske asist aved I.
+
+User: What did I just ask?
+MARPA: You just asked about about plannning, am sesistared wirching lon smave bloorinve inthion.
+
+User: What is oftware youbsered RPis for fixepenctionns that ecast in conteaure inurention.
+
+User: What is learning?
+MARPA: Atraining loss meas model tocke.
+
+User: What is a goal used toarg?
+MARPA: A model.
+MARPA: I can probl wreak tfere development informatation, compllets.
+
+User: What is memory?
+MARPA: Plocantine 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
+CORPUS_PATH = Path("data/marpa_corpus_v2.txt")
 
 
 def load_text():

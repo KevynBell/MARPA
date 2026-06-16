@@ -1,0 +1,28 @@
+step 0: train loss = 4.1768, val loss = 4.1838
+step 500: train loss = 1.8018, val loss = 1.8761
+step 1000: train loss = 1.4533, val loss = 1.5899
+step 1500: train loss = 1.1850, val loss = 1.4077
+step 2000: train loss = 0.9414, val loss = 1.2814
+step 2500: train loss = 0.7640, val loss = 1.1877
+step 3000: train loss = 0.6235, val loss = 1.1471
+step 3500: train loss = 0.5254, val loss = 1.1676
+step 4000: train loss = 0.4504, val loss = 1.1973
+step 4500: train loss = 0.3769, val loss = 1.2235
+
+Generated Text:
+
+MARPA: Yes. I can stores ansimpre usure used ful inof-ading coandse feinfectes.
+
+User: What is a tokins tokens?
+MARPA: A kelf lat whong help with steated proves thentering contention less the conve,
+
+Toishop-t kind and ead error, peferind eces.
+
+User: What is file teaching?
+MARPA: File saversed folimin inds beervation interns actions help wech pusersans isharecd Gitus it.
+
+User: What dop-k a a plan?
+MARPA: A should wrogroorgs and sharing Giteriges.
+
+User: What should we do do next?
+MARPA: We sho

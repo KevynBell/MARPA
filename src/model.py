@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 # Model settings
-block_size = 16
+block_size = 64
 n_embd = 64
 n_head = 4
 n_layer = 3

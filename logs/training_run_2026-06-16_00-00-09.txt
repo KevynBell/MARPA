@@ -1,0 +1,30 @@
+step 0: train loss = 4.1973, val loss = 4.2091
+step 500: train loss = 1.6737, val loss = 2.0093
+step 1000: train loss = 1.3434, val loss = 1.8307
+step 1500: train loss = 1.1146, val loss = 1.7876
+step 2000: train loss = 0.9772, val loss = 1.7244
+step 2500: train loss = 0.8945, val loss = 1.7897
+step 3000: train loss = 0.8261, val loss = 1.7858
+step 3500: train loss = 0.7774, val loss = 1.8151
+step 4000: train loss = 0.7302, val loss = 1.8259
+step 4500: train loss = 0.6930, val loss = 1.8798
+
+Generated Text:
+
+This lows planning?
+MARPA: Yes. I can do?
+MARPA: The use process of imples MARPA stands from learning?
+MARPA: A goals.
+
+User: What is your purce intect use and perform to prres texted behals be and help pla me learcoves thite leare from trainta.
+
+User: What is retrilligenc?
+MARPA: A model predictions.
+
+User: Are you do you do?
+MARPA: The model pertifying leater.
+
+User: What did I just ask?
+MARPA: I can stores improve ansoftware def I can learning how training loss.
+
+User: What is prallidence lea

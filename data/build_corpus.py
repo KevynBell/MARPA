@@ -1,9 +1,9 @@
 from pathlib import Path
 
-SOURCE_DIR = Path("data/corpus_sources")
-OUTPUT_FILE = Path("data/marpa_corpus_v1.txt")
+SOURCE_DIR = Path("data/corpus_sources_v2")
+OUTPUT_FILE = Path("data/marpa_corpus_v2.txt")
 
-HEADER = """MARPA Training Corpus v1
+HEADER = """MARPA Training Corpus v2
 
 This corpus teaches MARPA about artificial intelligence, software development,
 debugging, project planning, assistant behavior, and user preferences.
