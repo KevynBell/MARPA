@@ -1,2 +1,4 @@
 MARPA Permanent Memory
 User wants MARPA to become a curiosity-driven local AI agent.
+
+Question Q2 answer: Pins should be color-coded and easy for non-technical users.

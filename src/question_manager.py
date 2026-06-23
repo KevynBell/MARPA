@@ -1,5 +1,8 @@
 from pathlib import Path
 from datetime import datetime
+from memory_manager import (
+    save_memory,
+)
 
 QUESTIONS_PATH = Path("memory/questions.txt")
 
@@ -97,5 +100,9 @@ def answer_question(question_id, answer):
 
     if not found:
         return f"No open question found with ID {question_id}."
+    
+    save_memory(
+        f"Question {question_id} answer: {answer}"
+    )
 
     return f"Saved answer for {question_id}."

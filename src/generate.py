@@ -13,6 +13,8 @@ from memory_manager import (
     load_observations,
     load_project_notes,
     load_permanent_memory,
+    load_recent_conversation,
+    save_conversation_exchange,
 )
 from llm_backend import ask_local_model
 from question_manager import (
@@ -41,6 +43,7 @@ max_history_items = 10
 project_notes = load_project_notes()
 observations = load_observations()
 permanent_memory = load_permanent_memory()
+persistent_conversation = load_recent_conversation()
 
 while True:
     prompt = input("You: ")
@@ -121,6 +124,12 @@ while True:
         else:
             print("You have not asked anything yet.")
 
+        continue
+    
+    if prompt.lower() == "/recall":
+        print("\nMARPA:")
+        print(load_permanent_memory())
+        print()
         continue    
 
     routed_response = route_prompt(prompt)
@@ -158,6 +167,12 @@ while True:
 
     Recent Conversation:
     {conversation_context}
+    
+    Recent Saved Conversation:
+    {persistent_conversation}
+
+    Recent Current Session:
+    {conversation_context}
 
     User:
     {prompt}
@@ -172,6 +187,7 @@ while True:
 
     conversation_history.append(f"User: {prompt}")
     conversation_history.append(f"MARPA: {output}")
+    save_conversation_exchange(prompt, output)
 
     if len(conversation_history) > max_history_items:
         conversation_history = conversation_history[-max_history_items:]
