@@ -1,0 +1,7 @@
+MARPA Question Queue
+
+[Q1] [answered]
+Created: 2026-06-23 00:21:56
+Topic: MARPA visual brain
+Question: What should I remember about MARPA visual brain?
+Answer: The visual brain should use color-coded nodes for memory, tasks, pins, and observations.

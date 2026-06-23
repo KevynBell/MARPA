@@ -15,6 +15,12 @@ from memory_manager import (
     load_permanent_memory,
 )
 from llm_backend import ask_local_model
+from question_manager import (
+    create_question,
+    list_open_questions,
+    get_oldest_open_question,
+    answer_question,
+)
 
 checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
 
@@ -42,11 +48,6 @@ while True:
     if prompt.lower() in ["/quit", "quit", "exit"]:
         break
 
-    context = torch.tensor(
-        [encode(prompt)],
-        dtype=torch.long
-    )
-
     if prompt.lower().startswith("/plan "):
         goal = prompt[6:].strip()
         print("\nMARPA:")
@@ -62,7 +63,49 @@ while True:
         print()
 
         continue
+    
+    if prompt.lower() == "/observations":
+        print("\nMARPA:")
+        print(load_observations())
+        print()
+        continue
+    
+    if prompt.lower().startswith("/curious "):
+        topic = prompt[9:].strip()
+        print("\nMARPA:")
+        print(create_question(topic))
+        print()
+        continue
 
+    if prompt.lower() in ["/questions", "show questions", "what questions do you have?"]:
+        print("\nMARPA:")
+        print(list_open_questions())
+        print()
+        continue
+
+    if prompt.lower() in ["/ask", "do you have any questions?", "do you have any questions for me?"]:
+        print("\nMARPA:")
+        print(get_oldest_open_question())
+        print()
+        continue
+
+    if prompt.lower().startswith("/answer "):
+        parts = prompt.split(" ", 2)
+
+        if len(parts) < 3:
+            print("\nMARPA:")
+            print("Use: /answer Q1 your answer here")
+            print()
+            continue
+
+        question_id = parts[1].strip()
+        answer = parts[2].strip()
+
+        print("\nMARPA:")
+        print(answer_question(question_id, answer))
+        print()
+        continue
+    
     if prompt.lower() == "what did i just ask?":
         last_user_messages = [
             item for item in conversation_history
@@ -78,7 +121,7 @@ while True:
         else:
             print("You have not asked anything yet.")
 
-        continue
+        continue    
 
     routed_response = route_prompt(prompt)
 
@@ -94,13 +137,8 @@ while True:
             conversation_history = conversation_history[-max_history_items:]
 
         continue
-
-    if prompt.lower() == "/observations":
-        print("\nMARPA:")
-        print(load_observations())
-        print()
-        continue
-
+    
+# Model fallback line
     conversation_context = "\n".join(conversation_history[-6:])
 
     conversation_prompt = f"""
