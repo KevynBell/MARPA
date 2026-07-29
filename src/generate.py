@@ -1,9 +1,3 @@
-from pathlib import Path
-
-import torch
-
-from model import AttentionLanguageModel
-from tokenizer import load_text, build_tokenizer
 from agent_router import route_prompt
 from tools import (
     plan_goal,
@@ -24,15 +18,6 @@ from question_manager import (
     answer_question,
 )
 
-checkpoint_path = Path("models/marpa_transformer_stack_v1.pth")
-
-text = load_text()
-chars, stoi, itos, encode, decode = build_tokenizer(text)
-vocab_size = len(chars)
-
-model = AttentionLanguageModel(vocab_size)
-model.load_state_dict(torch.load(checkpoint_path))
-model.eval()
 
 print("MARPA loaded.")
 print("Type 'quit' to exit.\n")
@@ -146,44 +131,22 @@ while True:
             conversation_history = conversation_history[-max_history_items:]
 
         continue
-    
-# Model fallback line
-    conversation_context = "\n".join(conversation_history[-6:])
 
-    conversation_prompt = f"""
-    You are MARPA, the Memory-Augmented Reasoning and Planning Assistant.
+    # Model fallback line
+    conversation_context = "\n".join(conversation_history[-4:])
 
-    You are a local AI development assistant being built by Kevyn.
-    You help with software projects, debugging, memory, planning, and learning.
+    conversation_prompt = f"""You are MARPA, Kevyn's local AI assistant.
+    Help with software development, debugging, planning, documentation, and learning.
+    Answer the user's current request directly and concisely.
 
-    MARPA Identity and Project Notes:
-    {project_notes}
-
-    Permanent Memory:
-    {permanent_memory}
-
-    Recent Observations:
-    {observations}
-
-    Recent Conversation:
-    {conversation_context}
-    
-    Recent Saved Conversation:
-    {persistent_conversation}
-
-    Recent Current Session:
+    Recent session:
     {conversation_context}
 
-    User:
-    {prompt}
-
-    MARPA:
-    """
+    User: {prompt}
+    MARPA:"""
 
     output = ask_local_model(conversation_prompt)
-    
-    print("\nMARPA:")
-    print(output)
+
 
     conversation_history.append(f"User: {prompt}")
     conversation_history.append(f"MARPA: {output}")
