@@ -8,3 +8,5 @@ __pycache__/
 .env.*
 .vscode/
 .idea/
+# MARPA runtime data
+memory/conversation_log.txt
