@@ -1,24 +1,45 @@
 import json
 import time
 import urllib.request
+from collections.abc import Callable
 
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL_NAME = "qwen2.5:3b"
 
+OutputHandler = Callable[[str], None]
 
-def seconds_from_ns(value):
+
+def seconds_from_ns(value: int | float | None) -> float:
     """Convert Ollama nanoseconds to seconds."""
     return value / 1_000_000_000 if value else 0.0
 
 
-def ask_local_model(prompt):
+def terminal_output(text: str) -> None:
+    """Write a streamed model chunk to the current terminal."""
+    print(text, end="", flush=True)
+
+
+def ask_local_model(
+    prompt: str,
+    on_chunk: OutputHandler | None = None,
+    show_debug: bool = True,
+) -> str:
+    """
+    Send a prompt to Ollama and return the completed response.
+
+    When on_chunk is provided, each generated text chunk is passed to it.
+    Otherwise, chunks are printed directly to the terminal.
+    """
+    output_handler = on_chunk or terminal_output
     estimated_tokens = len(prompt) // 4
 
-    print(
-        f"[MARPA debug] Prompt size: {len(prompt):,} characters "
-        f"(roughly {estimated_tokens:,} tokens)"
-    )
+    if show_debug:
+        print(
+            f"[MARPA debug] Prompt size: {len(prompt):,} characters "
+            f"(roughly {estimated_tokens:,} tokens)"
+        )
+        print("\nMARPA:")
 
     payload = {
         "model": MODEL_NAME,
@@ -32,51 +53,44 @@ def ask_local_model(prompt):
         },
     }
 
-    data = json.dumps(payload).encode("utf-8")
-
     request = urllib.request.Request(
         OLLAMA_URL,
-        data=data,
+        data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"},
         method="POST",
     )
 
     started = time.perf_counter()
     first_token_time = None
-    output_parts = []
-    final_result = {}
+    output_parts: list[str] = []
+    final_result: dict = {}
 
     try:
-        print("\nMARPA:")
-
         with urllib.request.urlopen(request, timeout=600) as response:
             for raw_line in response:
                 if not raw_line.strip():
                     continue
 
                 result = json.loads(raw_line.decode("utf-8"))
-
                 chunk = result.get("response", "")
 
                 if chunk:
                     if first_token_time is None:
                         first_token_time = time.perf_counter() - started
 
-                    print(chunk, end="", flush=True)
+                    output_handler(chunk)
                     output_parts.append(chunk)
 
                 if result.get("done"):
                     final_result = result
 
-        print()
-
         wall_time = time.perf_counter() - started
-        load_time = seconds_from_ns(final_result.get("load_duration", 0))
+        load_time = seconds_from_ns(final_result.get("load_duration"))
         prompt_time = seconds_from_ns(
-            final_result.get("prompt_eval_duration", 0)
+            final_result.get("prompt_eval_duration")
         )
         generation_time = seconds_from_ns(
-            final_result.get("eval_duration", 0)
+            final_result.get("eval_duration")
         )
 
         prompt_tokens = final_result.get("prompt_eval_count", 0)
@@ -94,16 +108,19 @@ def ask_local_model(prompt):
             else "unknown"
         )
 
-        print(
-            "[MARPA performance] "
-            f"first_token={first_token_display} | "
-            f"total={wall_time:.2f}s | "
-            f"load={load_time:.2f}s | "
-            f"prompt={prompt_time:.2f}s ({prompt_tokens} tokens) | "
-            f"generation={generation_time:.2f}s "
-            f"({generated_tokens} tokens, "
-            f"{tokens_per_second:.2f} tok/s)"
-        )
+        if show_debug:
+            print()
+            print(
+                "[MARPA performance] "
+                f"first_token={first_token_display} | "
+                f"total={wall_time:.2f}s | "
+                f"load={load_time:.2f}s | "
+                f"prompt={prompt_time:.2f}s "
+                f"({prompt_tokens} tokens) | "
+                f"generation={generation_time:.2f}s "
+                f"({generated_tokens} tokens, "
+                f"{tokens_per_second:.2f} tok/s)"
+            )
 
         return "".join(output_parts).strip()
 
@@ -112,5 +129,8 @@ def ask_local_model(prompt):
         message = (
             f"Local model error after {wall_time:.2f} seconds: {error}"
         )
-        print(message)
+
+        if show_debug:
+            print(message)
+
         return message
