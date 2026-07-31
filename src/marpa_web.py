@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from pydantic import BaseModel
 
 from web_client import send_prompt
@@ -15,6 +15,7 @@ app = FastAPI(
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 INDEX_FILE = PROJECT_ROOT / "web" / "index.html"
+WEB_DIR = PROJECT_ROOT / "web"
 
 
 class ChatRequest(BaseModel):
@@ -54,6 +55,10 @@ def home() -> HTMLResponse:
         )
 
     return HTMLResponse(INDEX_FILE.read_text(encoding="utf-8"))
+
+@app.get("/app.js")
+def javascript():
+    return FileResponse(WEB_DIR / "app.js")
 
 
 @app.post("/chat", response_model=ChatResponse)
