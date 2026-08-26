@@ -1,6 +1,18 @@
 const chat = document.getElementById("chat");
 const promptInput = document.getElementById("prompt");
 const sendButton = document.getElementById("send-button");
+const profileSelect = document.getElementById("profile-select");
+
+const ACTIVE_PROFILE_KEY = "marpa.activeProfile";
+
+let currentUserId =
+    localStorage.getItem(ACTIVE_PROFILE_KEY) || "kevyn";
+
+
+function historyKey(userId) {
+    return `marpa.chat.${userId}`;
+}
+
 
 function renderMarkdown(text) {
     const rendered = marked.parse(text, {
@@ -11,9 +23,74 @@ function renderMarkdown(text) {
     return DOMPurify.sanitize(rendered);
 }
 
+
 function updateMarpaMarkdown(element, text) {
     element.innerHTML = renderMarkdown(text);
 }
+
+
+function loadHistory(userId) {
+    const stored = localStorage.getItem(
+        historyKey(userId)
+    );
+
+    if (!stored) {
+        return [];
+    }
+
+    try {
+        return JSON.parse(stored);
+    } catch (error) {
+        console.error(
+            "Unable to load MARPA chat history:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+function saveHistory(userId, history) {
+    localStorage.setItem(
+        historyKey(userId),
+        JSON.stringify(history)
+    );
+}
+
+
+function saveMessage(userId, role, text, timestamp) {
+    const history = loadHistory(userId);
+
+    history.push({
+        role,
+        text,
+        timestamp,
+    });
+
+    saveHistory(userId, history);
+}
+
+
+function restoreConversation(userId) {
+    chat.innerHTML = "";
+
+    const history = loadHistory(userId);
+
+    for (const item of history) {
+        appendMessage(
+            item.role,
+            item.text,
+            {
+                timestamp: item.timestamp,
+                markdown: item.role === "marpa",
+            }
+        );
+    }
+
+    scrollChatToBottom();
+}
+
 
 async function sendPrompt() {
     const text = promptInput.value.trim();
@@ -22,7 +99,22 @@ async function sendPrompt() {
         return;
     }
 
-    appendMessage("user", text);
+    const userTimestamp = new Date().toISOString();
+
+    appendMessage(
+        "user",
+        text,
+        {
+            timestamp: userTimestamp,
+        }
+    );
+
+    saveMessage(
+        currentUserId,
+        "user",
+        text,
+        userTimestamp
+    );
 
     promptInput.value = "";
     setComposerBusy(true);
@@ -41,10 +133,13 @@ async function sendPrompt() {
     try {
         const response = await fetch("/chat", {
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json",
             },
+
             body: JSON.stringify({
+                user_id: currentUserId,
                 prompt: text,
             }),
         });
@@ -89,7 +184,9 @@ async function sendPrompt() {
             if (chunk) {
                 receivedText = true;
                 fullResponse += chunk;
+
                 responseText.textContent = fullResponse;
+
                 scrollChatToBottom();
             }
         }
@@ -106,8 +203,21 @@ async function sendPrompt() {
             responseText.textContent =
                 "MARPA completed the request without returning text.";
         } else {
-            updateMarpaMarkdown(responseText, fullResponse);
-        } 
+            updateMarpaMarkdown(
+                responseText,
+                fullResponse
+            );
+
+            const marpaTimestamp =
+                new Date().toISOString();
+
+            saveMessage(
+                currentUserId,
+                "marpa",
+                fullResponse,
+                marpaTimestamp
+            );
+        }
 
     } catch (error) {
         marpaMessage.classList.remove("thinking");
@@ -122,16 +232,27 @@ async function sendPrompt() {
             `Unable to reach MARPA: ${error.message}`;
 
     } finally {
-        responseText.classList.remove("streaming-cursor");
+        responseText.classList.remove(
+            "streaming-cursor"
+        );
+
         setComposerBusy(false);
         scrollChatToBottom();
     }
 }
 
 
-function appendMessage(role, text, options = {}) {
+function appendMessage(
+    role,
+    text,
+    options = {}
+) {
     const message = document.createElement("article");
-    message.classList.add("message", role);
+
+    message.classList.add(
+        "message",
+        role
+    );
 
     if (options.thinking) {
         message.classList.add("thinking");
@@ -142,19 +263,46 @@ function appendMessage(role, text, options = {}) {
 
     const label = document.createElement("div");
     label.classList.add("message-label");
-    label.textContent = role === "user" ? "You" : "MARPA";
+
+    label.textContent =
+        role === "user"
+            ? "You"
+            : "MARPA";
 
     const timestamp = document.createElement("time");
-    timestamp.classList.add("message-time");
-    timestamp.dateTime = new Date().toISOString();
-    timestamp.textContent = getCurrentTime();
 
-    const messageText = document.createElement("div");
+    timestamp.classList.add("message-time");
+
+    const timestampValue =
+        options.timestamp ||
+        new Date().toISOString();
+
+    timestamp.dateTime = timestampValue;
+
+    timestamp.textContent =
+        formatTimestamp(timestampValue);
+
+    const messageText =
+        document.createElement("div");
+
     messageText.classList.add("message-text");
-    messageText.textContent = text;
+
+    if (
+        role === "marpa" &&
+        options.markdown
+    ) {
+        updateMarpaMarkdown(
+            messageText,
+            text
+        );
+    } else {
+        messageText.textContent = text;
+    }
 
     if (options.thinking) {
-        messageText.classList.add("thinking-dots");
+        messageText.classList.add(
+            "thinking-dots"
+        );
     }
 
     header.appendChild(label);
@@ -164,6 +312,7 @@ function appendMessage(role, text, options = {}) {
     message.appendChild(messageText);
 
     chat.appendChild(message);
+
     scrollChatToBottom();
 
     return message;
@@ -173,7 +322,12 @@ function appendMessage(role, text, options = {}) {
 function setComposerBusy(isBusy) {
     sendButton.disabled = isBusy;
     promptInput.disabled = isBusy;
-    sendButton.textContent = isBusy ? "Working…" : "Send";
+    profileSelect.disabled = isBusy;
+
+    sendButton.textContent =
+        isBusy
+            ? "Working…"
+            : "Send";
 
     if (!isBusy) {
         promptInput.focus();
@@ -181,11 +335,11 @@ function setComposerBusy(isBusy) {
 }
 
 
-function getCurrentTime() {
+function formatTimestamp(timestamp) {
     return new Intl.DateTimeFormat([], {
         hour: "numeric",
         minute: "2-digit",
-    }).format(new Date());
+    }).format(new Date(timestamp));
 }
 
 
@@ -194,17 +348,49 @@ function scrollChatToBottom() {
 }
 
 
-sendButton.addEventListener("click", sendPrompt);
+sendButton.addEventListener(
+    "click",
+    sendPrompt
+);
 
-promptInput.addEventListener("keydown", (event) => {
-    if (
-        event.key === "Enter" &&
-        !event.shiftKey &&
-        !event.isComposing
-    ) {
-        event.preventDefault();
-        sendPrompt();
+
+promptInput.addEventListener(
+    "keydown",
+    (event) => {
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey &&
+            !event.isComposing
+        ) {
+            event.preventDefault();
+            sendPrompt();
+        }
     }
-});
+);
+
+
+profileSelect.addEventListener(
+    "change",
+    () => {
+        currentUserId =
+            profileSelect.value;
+
+        localStorage.setItem(
+            ACTIVE_PROFILE_KEY,
+            currentUserId
+        );
+
+        restoreConversation(
+            currentUserId
+        );
+
+        promptInput.focus();
+    }
+);
+
+
+profileSelect.value = currentUserId;
+
+restoreConversation(currentUserId);
 
 promptInput.focus();

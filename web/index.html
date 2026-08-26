@@ -496,6 +496,38 @@
 	    border: 0;
 	    border-top: 1px solid var(--border);
 	}
+
+        .profile-control {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .profile-control label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        #profile-select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--surface-raised);
+            color: var(--text);
+            outline: none;
+        }
+
+        #profile-select:focus {
+            border-color: var(--user);
+        }
+
+        #profile-select:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
     </style>
 </head>
 
@@ -516,6 +548,15 @@
                 <div class="system-detail">
                     <span>Model</span>
                     <strong>qwen2.5:3b</strong>
+                </div>
+
+                <div class="profile-control">
+                    <label for="profile-select">Profile</label>
+
+                    <select id="profile-select">
+                        <option value="kevyn">Kevyn</option>
+                        <option value="guest">Guest</option>
+                    </select>
                 </div>
 
                 <div class="system-detail">

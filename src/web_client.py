@@ -4,12 +4,21 @@ from collections.abc import Iterator
 
 HOST = "127.0.0.1"
 PORT = 5050
+DEFAULT_USER_ID = "kevyn"
 
 
-def stream_prompt(prompt: str) -> Iterator[str]:
+def stream_prompt(
+    prompt: str,
+    user_id: str = DEFAULT_USER_ID,
+) -> Iterator[str]:
     """Send a prompt to MARPA and yield response chunks as they arrive."""
 
-    request = json.dumps({"prompt": prompt}).encode("utf-8") + b"\n"
+    request = json.dumps(
+        {
+            "user_id": user_id,
+            "prompt": prompt,
+        }
+    ).encode("utf-8") + b"\n"
 
     try:
         with socket.create_connection((HOST, PORT), timeout=10) as connection:
@@ -41,7 +50,15 @@ def stream_prompt(prompt: str) -> Iterator[str]:
         raise RuntimeError(str(error)) from error
 
 
-def send_prompt(prompt: str) -> str:
+def send_prompt(
+    prompt: str,
+    user_id: str = DEFAULT_USER_ID,
+) -> str:
     """Send a prompt to MARPA and return the completed response."""
 
-    return "".join(stream_prompt(prompt))
+    return "".join(
+        stream_prompt(
+            prompt,
+            user_id=user_id,
+        )
+    )

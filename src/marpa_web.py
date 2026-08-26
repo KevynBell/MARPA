@@ -20,6 +20,7 @@ WEB_DIR = PROJECT_ROOT / "web"
 
 class ChatRequest(BaseModel):
     prompt: str
+    user_id: str = "kevyn"
 
 
 @app.get("/health")
@@ -68,7 +69,10 @@ def chat(request: ChatRequest) -> StreamingResponse:
         )
 
     return StreamingResponse(
-        stream_prompt(prompt),
+        stream_prompt(
+            prompt,
+            user_id=request.user_id,
+        ),
         media_type="text/plain",
         headers={
             "Cache-Control": "no-cache",
