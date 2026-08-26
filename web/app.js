@@ -2,6 +2,18 @@ const chat = document.getElementById("chat");
 const promptInput = document.getElementById("prompt");
 const sendButton = document.getElementById("send-button");
 
+function renderMarkdown(text) {
+    const rendered = marked.parse(text, {
+        breaks: true,
+        gfm: true,
+    });
+
+    return DOMPurify.sanitize(rendered);
+}
+
+function updateMarpaMarkdown(element, text) {
+    element.innerHTML = renderMarkdown(text);
+}
 
 async function sendPrompt() {
     const text = promptInput.value.trim();
@@ -61,6 +73,7 @@ async function sendPrompt() {
         const decoder = new TextDecoder();
 
         let receivedText = false;
+        let fullResponse = "";
 
         while (true) {
             const { value, done } = await reader.read();
@@ -75,7 +88,8 @@ async function sendPrompt() {
 
             if (chunk) {
                 receivedText = true;
-                responseText.textContent += chunk;
+                fullResponse += chunk;
+                responseText.textContent = fullResponse;
                 scrollChatToBottom();
             }
         }
@@ -84,13 +98,17 @@ async function sendPrompt() {
 
         if (finalChunk) {
             receivedText = true;
-            responseText.textContent += finalChunk;
+            fullResponse += finalChunk;
+            responseText.textContent = fullResponse;
         }
 
         if (!receivedText) {
             responseText.textContent =
                 "MARPA completed the request without returning text.";
-        }
+        } else {
+            updateMarpaMarkdown(responseText, fullResponse);
+        } 
+
     } catch (error) {
         marpaMessage.classList.remove("thinking");
         marpaMessage.classList.add("error");
@@ -102,6 +120,7 @@ async function sendPrompt() {
 
         responseText.textContent =
             `Unable to reach MARPA: ${error.message}`;
+
     } finally {
         responseText.classList.remove("streaming-cursor");
         setComposerBusy(false);

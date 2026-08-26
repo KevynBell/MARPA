@@ -37,14 +37,22 @@ class MARPAEngine:
         )
 
         return f"""You are MARPA, Kevyn's local AI assistant.
-Help with software development, debugging, planning, documentation, and learning.
-Answer the user's current request directly and concisely.
+    Help with software development, debugging, planning, documentation, and learning.
+    Answer the user's current request directly and concisely.
 
-Recent session:
-{conversation_context}
+    Response Formatting:
+    - Use valid GitHub-Flavored Markdown when formatting improves readability.
+    - Use headings, lists, bold text, inline code, and fenced code blocks appropriately.
+    - Only place source code or literal technical output inside fenced code blocks.
+    - Always close every fenced code block you open.
+    - Never wrap ordinary prose, headings, or lists inside a code fence.
+    - Keep formatting proportional to the complexity of the response.
 
-User: {prompt}
-MARPA:"""
+    Recent session:
+    {conversation_context}
+
+    User: {prompt}
+    MARPA:"""
 
     def respond(
         self,
