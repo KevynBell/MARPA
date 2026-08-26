@@ -1,10 +1,10 @@
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import StreamingResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
 
-from web_client import send_prompt
+from web_client import stream_prompt
 
 
 app = FastAPI(
@@ -20,10 +20,6 @@ WEB_DIR = PROJECT_ROOT / "web"
 
 class ChatRequest(BaseModel):
     prompt: str
-
-
-class ChatResponse(BaseModel):
-    response: str
 
 
 @app.get("/health")
@@ -61,8 +57,8 @@ def javascript():
     return FileResponse(WEB_DIR / "app.js")
 
 
-@app.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest) -> ChatResponse:
+@app.post("/chat")
+def chat(request: ChatRequest) -> StreamingResponse:
     prompt = request.prompt.strip()
 
     if not prompt:
@@ -71,12 +67,11 @@ def chat(request: ChatRequest) -> ChatResponse:
             detail="A non-empty prompt is required.",
         )
 
-    try:
-        response = send_prompt(prompt)
-    except RuntimeError as error:
-        raise HTTPException(
-            status_code=503,
-            detail=str(error),
-        ) from error
-
-    return ChatResponse(response=response)
+    return StreamingResponse(
+        stream_prompt(prompt),
+        media_type="text/plain",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Content-Type-Options": "nosniff",
+        },
+    )

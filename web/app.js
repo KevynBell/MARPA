@@ -1,36 +1,191 @@
-const chat=document.getElementById("chat");
-const prompt=document.getElementById("prompt");
+const chat = document.getElementById("chat");
+const promptInput = document.getElementById("prompt");
+const sendButton = document.getElementById("send-button");
 
-async function sendPrompt(){
 
-    const text=prompt.value.trim();
+async function sendPrompt() {
+    const text = promptInput.value.trim();
 
-    if(!text){
+    if (!text || sendButton.disabled) {
         return;
     }
 
-    chat.innerHTML+=`<p><span class="user">You:</span> ${text}</p>`;
+    appendMessage("user", text);
 
-    prompt.value="";
+    promptInput.value = "";
+    setComposerBusy(true);
 
-    const response=await fetch("/chat",{
+    const marpaMessage = appendMessage(
+        "marpa",
+        "MARPA is thinking",
+        {
+            thinking: true,
+        }
+    );
 
-        method:"POST",
+    const responseText =
+        marpaMessage.querySelector(".message-text");
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+    try {
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                prompt: text,
+            }),
+        });
 
-        body:JSON.stringify({
-            prompt:text
-        })
+        if (!response.ok) {
+            const errorText = await response.text();
 
-    });
+            throw new Error(
+                errorText ||
+                `Request failed with status ${response.status}`
+            );
+        }
 
-    const data=await response.json();
+        if (!response.body) {
+            throw new Error(
+                "The browser did not provide a response stream."
+            );
+        }
 
-    chat.innerHTML+=`<p><span class="marpa">MARPA:</span> ${data.response}</p>`;
+        marpaMessage.classList.remove("thinking");
+        responseText.classList.remove("thinking-dots");
+        responseText.classList.add("streaming-cursor");
+        responseText.textContent = "";
 
-    chat.scrollTop=chat.scrollHeight;
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
 
+        let receivedText = false;
+
+        while (true) {
+            const { value, done } = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            const chunk = decoder.decode(value, {
+                stream: true,
+            });
+
+            if (chunk) {
+                receivedText = true;
+                responseText.textContent += chunk;
+                scrollChatToBottom();
+            }
+        }
+
+        const finalChunk = decoder.decode();
+
+        if (finalChunk) {
+            receivedText = true;
+            responseText.textContent += finalChunk;
+        }
+
+        if (!receivedText) {
+            responseText.textContent =
+                "MARPA completed the request without returning text.";
+        }
+    } catch (error) {
+        marpaMessage.classList.remove("thinking");
+        marpaMessage.classList.add("error");
+
+        responseText.classList.remove(
+            "thinking-dots",
+            "streaming-cursor"
+        );
+
+        responseText.textContent =
+            `Unable to reach MARPA: ${error.message}`;
+    } finally {
+        responseText.classList.remove("streaming-cursor");
+        setComposerBusy(false);
+        scrollChatToBottom();
+    }
 }
+
+
+function appendMessage(role, text, options = {}) {
+    const message = document.createElement("article");
+    message.classList.add("message", role);
+
+    if (options.thinking) {
+        message.classList.add("thinking");
+    }
+
+    const header = document.createElement("div");
+    header.classList.add("message-header");
+
+    const label = document.createElement("div");
+    label.classList.add("message-label");
+    label.textContent = role === "user" ? "You" : "MARPA";
+
+    const timestamp = document.createElement("time");
+    timestamp.classList.add("message-time");
+    timestamp.dateTime = new Date().toISOString();
+    timestamp.textContent = getCurrentTime();
+
+    const messageText = document.createElement("div");
+    messageText.classList.add("message-text");
+    messageText.textContent = text;
+
+    if (options.thinking) {
+        messageText.classList.add("thinking-dots");
+    }
+
+    header.appendChild(label);
+    header.appendChild(timestamp);
+
+    message.appendChild(header);
+    message.appendChild(messageText);
+
+    chat.appendChild(message);
+    scrollChatToBottom();
+
+    return message;
+}
+
+
+function setComposerBusy(isBusy) {
+    sendButton.disabled = isBusy;
+    promptInput.disabled = isBusy;
+    sendButton.textContent = isBusy ? "Working…" : "Send";
+
+    if (!isBusy) {
+        promptInput.focus();
+    }
+}
+
+
+function getCurrentTime() {
+    return new Intl.DateTimeFormat([], {
+        hour: "numeric",
+        minute: "2-digit",
+    }).format(new Date());
+}
+
+
+function scrollChatToBottom() {
+    chat.scrollTop = chat.scrollHeight;
+}
+
+
+sendButton.addEventListener("click", sendPrompt);
+
+promptInput.addEventListener("keydown", (event) => {
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.isComposing
+    ) {
+        event.preventDefault();
+        sendPrompt();
+    }
+});
+
+promptInput.focus();
