@@ -5,7 +5,13 @@ from collections.abc import Callable
 
 from agent_router import route_prompt
 from llm_backend import ask_local_model
-from memory_manager import save_conversation_exchange
+from memory_manager import (
+    DEFAULT_USER_ID,
+    load_permanent_memory,
+    load_recent_conversation,
+    sanitize_user_id,
+    save_conversation_exchange,
+)
 
 
 HOST = "127.0.0.1"
@@ -17,45 +23,83 @@ class MARPAEngine:
     """Long-running MARPA conversation engine."""
 
     def __init__(self) -> None:
-        self.conversation_history: list[str] = []
+        self.conversation_histories: dict[str, list[str]] = {}
         self.lock = threading.Lock()
 
-    def _remember_exchange(self, prompt: str, response: str) -> None:
-        self.conversation_history.append(f"User: {prompt}")
-        self.conversation_history.append(f"MARPA: {response}")
+    def _remember_exchange(
+        self,
+        user_id: str,
+        prompt: str,
+        response: str,
+    ) -> None:
+        history = self.conversation_histories.setdefault(
+            user_id,
+            [],
+        )
 
-        if len(self.conversation_history) > MAX_HISTORY_ITEMS:
-            self.conversation_history = self.conversation_history[
+        history.append(f"User: {prompt}")
+        history.append(f"MARPA: {response}")
+
+        if len(history) > MAX_HISTORY_ITEMS:
+            self.conversation_histories[user_id] = history[
                 -MAX_HISTORY_ITEMS:
             ]
 
-        save_conversation_exchange(prompt, response)
-
-    def _build_prompt(self, prompt: str) -> str:
-        conversation_context = "\n".join(
-            self.conversation_history[-4:]
+        save_conversation_exchange(
+            prompt,
+            response,
+            user_id=user_id,
         )
 
-        return f"""You are MARPA, Kevyn's local AI assistant.
-    Help with software development, debugging, planning, documentation, and learning.
-    Answer the user's current request directly and concisely.
+    def _build_prompt(
+        self,
+        user_id: str,
+        prompt: str,
+    ) -> str:
+        history = self.conversation_histories.setdefault(
+            user_id,
+            [],
+        )
 
-    Response Formatting:
-    - Use valid GitHub-Flavored Markdown when formatting improves readability.
-    - Use headings, lists, bold text, inline code, and fenced code blocks appropriately.
-    - Only place source code or literal technical output inside fenced code blocks.
-    - Always close every fenced code block you open.
-    - Never wrap ordinary prose, headings, or lists inside a code fence.
-    - Keep formatting proportional to the complexity of the response.
+        if history:
+            conversation_context = "\n".join(history[-4:])
+        else:
+            conversation_context = load_recent_conversation(
+                limit=4,
+                user_id=user_id,
+            )
 
-    Recent session:
-    {conversation_context}
+        permanent_memory = load_permanent_memory(
+            user_id=user_id,
+        )
 
-    User: {prompt}
-    MARPA:"""
+        return f"""You are MARPA, a local AI assistant.
+Help with software development, debugging, planning, documentation, and learning.
+Answer the user's current request directly and concisely.
+
+Response Formatting:
+- Use valid GitHub-Flavored Markdown when formatting improves readability.
+- Use headings, lists, bold text, inline code, and fenced code blocks appropriately.
+- Only place source code or literal technical output inside fenced code blocks.
+- Always close every fenced code block you open.
+- Never wrap ordinary prose, headings, or lists inside a code fence.
+- Keep formatting proportional to the complexity of the response.
+
+User ID:
+{user_id}
+
+Permanent Memory:
+{permanent_memory}
+
+Recent Conversation:
+{conversation_context}
+
+User: {prompt}
+MARPA:"""
 
     def respond(
         self,
+        user_id: str,
         prompt: str,
         on_chunk: Callable[[str], None],
     ) -> str:
@@ -70,10 +114,17 @@ class MARPAEngine:
 
             if routed_response is not None:
                 on_chunk(routed_response)
-                self._remember_exchange(prompt, routed_response)
+                self._remember_exchange(
+                    user_id,
+                    prompt,
+                    routed_response,
+                )
                 return routed_response
 
-            model_prompt = self._build_prompt(prompt)
+            model_prompt = self._build_prompt(
+                user_id,
+                prompt,
+            )
 
             response = ask_local_model(
                 model_prompt,
@@ -81,7 +132,11 @@ class MARPAEngine:
                 show_debug=False,
             )
 
-            self._remember_exchange(prompt, response)
+            self._remember_exchange(
+                user_id,
+                prompt,
+                response,
+            )
             return response
 
 
@@ -107,6 +162,16 @@ class MARPARequestHandler(socketserver.StreamRequestHandler):
 
         try:
             request = json.loads(raw_request.decode("utf-8"))
+
+            user_id = sanitize_user_id(
+                str(
+                    request.get(
+                        "user_id",
+                        DEFAULT_USER_ID,
+                    )
+                )
+            )
+
             prompt = str(request.get("prompt", "")).strip()
 
             if not prompt:
@@ -126,7 +191,11 @@ class MARPARequestHandler(socketserver.StreamRequestHandler):
                     }
                 )
 
-            response = ENGINE.respond(prompt, send_chunk)
+            response = ENGINE.respond(
+                user_id,
+                prompt,
+                send_chunk,
+            )
 
             self.send_message(
                 {
