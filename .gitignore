@@ -10,3 +10,6 @@ __pycache__/
 .idea/
 # MARPA runtime data
 memory/conversation_log.txt
+
+# Local MARPA user profiles
+memory/users/
