@@ -2,6 +2,7 @@ const chat = document.getElementById("chat");
 const promptInput = document.getElementById("prompt");
 const sendButton = document.getElementById("send-button");
 const profileSelect = document.getElementById("profile-select");
+const newConversationButton = document.getElementById("new-conversation-button");
 
 const ACTIVE_PROFILE_KEY = "marpa.activeProfile";
 
@@ -323,6 +324,7 @@ function setComposerBusy(isBusy) {
     sendButton.disabled = isBusy;
     promptInput.disabled = isBusy;
     profileSelect.disabled = isBusy;
+    newConversationButton.disabled = isBusy;
 
     sendButton.textContent =
         isBusy
@@ -345,6 +347,66 @@ function formatTimestamp(timestamp) {
 
 function scrollChatToBottom() {
     chat.scrollTop = chat.scrollHeight;
+}
+
+
+async function startNewConversation() {
+    if (newConversationButton.disabled) {
+        return;
+    }
+
+    const confirmed = window.confirm(
+        "Start a new conversation? Your saved history will be preserved."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    setComposerBusy(true);
+
+    try {
+        const response = await fetch(
+            "/conversation/reset",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    user_id: currentUserId,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+
+            throw new Error(
+                errorText ||
+                "Unable to reset conversation."
+            );
+        }
+
+        localStorage.removeItem(
+            historyKey(currentUserId)
+        );
+
+        chat.innerHTML = "";
+
+    } catch (error) {
+        console.error(
+            "Unable to start a new MARPA conversation:",
+            error
+        );
+
+        window.alert(
+            "MARPA could not start a new conversation."
+        );
+
+    } finally {
+        setComposerBusy(false);
+    }
 }
 
 
@@ -386,6 +448,12 @@ profileSelect.addEventListener(
 
         promptInput.focus();
     }
+);
+
+
+newConversationButton.addEventListener(
+    "click",
+    startNewConversation
 );
 
 

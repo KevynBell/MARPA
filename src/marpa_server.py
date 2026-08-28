@@ -24,6 +24,7 @@ class MARPAEngine:
 
     def __init__(self) -> None:
         self.conversation_histories: dict[str, list[str]] = {}
+        self.fresh_conversations: set[str] = set()
         self.lock = threading.Lock()
 
     def _remember_exchange(
@@ -51,6 +52,17 @@ class MARPAEngine:
             user_id=user_id,
         )
 
+        self.fresh_conversations.discard(user_id)
+
+    def reset_conversation(
+        self,
+        user_id: str,
+    ) -> None:
+        """Start a fresh active conversation without deleting saved history."""
+
+        self.conversation_histories[user_id] = []
+        self.fresh_conversations.add(user_id)
+
     def _build_prompt(
         self,
         user_id: str,
@@ -63,6 +75,10 @@ class MARPAEngine:
 
         if history:
             conversation_context = "\n".join(history[-4:])
+
+        elif user_id in self.fresh_conversations:
+            conversation_context = ""
+
         else:
             conversation_context = load_recent_conversation(
                 limit=4,
@@ -121,11 +137,13 @@ MARPA:"""
 
             if routed_response is not None:
                 on_chunk(routed_response)
+
                 self._remember_exchange(
                     user_id,
                     prompt,
                     routed_response,
                 )
+
                 return routed_response
 
             model_prompt = self._build_prompt(
@@ -144,6 +162,7 @@ MARPA:"""
                 prompt,
                 response,
             )
+
             return response
 
 
@@ -179,7 +198,35 @@ class MARPARequestHandler(socketserver.StreamRequestHandler):
                 )
             )
 
-            prompt = str(request.get("prompt", "")).strip()
+            request_type = str(
+                request.get(
+                    "type",
+                    "prompt",
+                )
+            )
+
+            if request_type == "reset_conversation":
+                ENGINE.reset_conversation(user_id)
+
+                self.send_message(
+                    {
+                        "type": "done",
+                        "message": "Conversation reset.",
+                    }
+                )
+
+                print(
+                    f"[MARPA server] Reset conversation for {user_id}"
+                )
+
+                return
+
+            prompt = str(
+                request.get(
+                    "prompt",
+                    "",
+                )
+            ).strip()
 
             if not prompt:
                 self.send_message(
@@ -188,6 +235,7 @@ class MARPARequestHandler(socketserver.StreamRequestHandler):
                         "message": "A non-empty prompt is required.",
                     }
                 )
+
                 return
 
             def send_chunk(chunk: str) -> None:
@@ -230,6 +278,7 @@ class MARPARequestHandler(socketserver.StreamRequestHandler):
                         "message": str(error),
                     }
                 )
+
             except Exception:
                 pass
 

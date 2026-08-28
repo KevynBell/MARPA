@@ -62,3 +62,43 @@ def send_prompt(
             user_id=user_id,
         )
     )
+
+def reset_conversation(
+    user_id: str = DEFAULT_USER_ID,
+) -> None:
+    """Reset MARPA's active conversation context for one user."""
+
+    request = json.dumps(
+        {
+            "type": "reset_conversation",
+            "user_id": user_id,
+        }
+    ).encode("utf-8") + b"\n"
+
+    try:
+        with socket.create_connection((HOST, PORT), timeout=10) as connection:
+            connection.sendall(request)
+
+            with connection.makefile("r", encoding="utf-8") as response:
+                for line in response:
+                    message = json.loads(line)
+                    message_type = message.get("type")
+
+                    if message_type == "done":
+                        return
+
+                    if message_type == "error":
+                        raise RuntimeError(
+                            message.get(
+                                "message",
+                                "Unknown MARPA error",
+                            )
+                        )
+
+    except ConnectionRefusedError as error:
+        raise RuntimeError(
+            "Unable to connect to the MARPA daemon."
+        ) from error
+
+    except OSError as error:
+        raise RuntimeError(str(error)) from error

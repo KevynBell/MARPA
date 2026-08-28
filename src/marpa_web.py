@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
 
-from web_client import stream_prompt
+from web_client import reset_conversation, stream_prompt
 
 
 app = FastAPI(
@@ -16,6 +16,10 @@ app = FastAPI(
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 INDEX_FILE = PROJECT_ROOT / "web" / "index.html"
 WEB_DIR = PROJECT_ROOT / "web"
+
+
+class ConversationResetRequest(BaseModel):
+    user_id: str = "kevyn"
 
 
 class ChatRequest(BaseModel):
@@ -79,3 +83,24 @@ def chat(request: ChatRequest) -> StreamingResponse:
             "X-Content-Type-Options": "nosniff",
         },
     )
+
+
+@app.post("/conversation/reset")
+def reset_active_conversation(
+    request: ConversationResetRequest,
+) -> dict[str, str]:
+    try:
+        reset_conversation(
+            user_id=request.user_id,
+        )
+
+    except RuntimeError as error:
+        raise HTTPException(
+            status_code=503,
+            detail=str(error),
+        ) from error
+
+    return {
+        "status": "ok",
+        "message": "Conversation reset.",
+    }
