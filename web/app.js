@@ -6,8 +6,7 @@ const newConversationButton = document.getElementById("new-conversation-button")
 
 const ACTIVE_PROFILE_KEY = "marpa.activeProfile";
 
-let currentUserId =
-    localStorage.getItem(ACTIVE_PROFILE_KEY) || "kevyn";
+let currentUserId = "";
 
 
 function historyKey(userId) {
@@ -409,6 +408,91 @@ async function startNewConversation() {
     }
 }
 
+async function loadProfiles() {
+    setComposerBusy(true);
+
+    try {
+        const response = await fetch("/profiles");
+
+        if (!response.ok) {
+            throw new Error(
+                `Request failed with status ${response.status}`
+            );
+        }
+
+        const profiles = await response.json();
+
+        profileSelect.innerHTML = "";
+
+        for (const profile of profiles) {
+            const option =
+                document.createElement("option");
+
+            option.value = profile.user_id;
+            option.textContent =
+                profile.display_name;
+
+            profileSelect.appendChild(option);
+        }
+
+        const savedProfile =
+            localStorage.getItem(
+                ACTIVE_PROFILE_KEY
+            );
+
+        const profileExists =
+            profiles.some(
+                (profile) =>
+                    profile.user_id === savedProfile
+            );
+
+        currentUserId =
+            profileExists
+                ? savedProfile
+                : profiles[0]?.user_id || "";
+
+        profileSelect.value =
+            currentUserId;
+
+        if (currentUserId) {
+            localStorage.setItem(
+                ACTIVE_PROFILE_KEY,
+                currentUserId
+            );
+
+            restoreConversation(
+                currentUserId
+            );
+        } else {
+            chat.innerHTML = "";
+        }
+
+        setComposerBusy(false);
+
+    } catch (error) {
+        console.error(
+            "Unable to load MARPA profiles:",
+            error
+        );
+
+        profileSelect.innerHTML = "";
+
+        const option =
+            document.createElement("option");
+
+        option.value = "";
+        option.textContent =
+            "Profiles unavailable";
+
+        profileSelect.appendChild(option);
+
+        profileSelect.disabled = true;
+        sendButton.disabled = true;
+        promptInput.disabled = true;
+        newConversationButton.disabled = true;
+    }
+}
+
 
 sendButton.addEventListener(
     "click",
@@ -457,8 +541,6 @@ newConversationButton.addEventListener(
 );
 
 
-profileSelect.value = currentUserId;
-
-restoreConversation(currentUserId);
+loadProfiles();
 
 promptInput.focus();

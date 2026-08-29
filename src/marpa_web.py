@@ -4,8 +4,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
 
-from web_client import reset_conversation, stream_prompt
 
+from web_client import reset_conversation, stream_prompt
+from profile_manager import list_profiles
 
 app = FastAPI(
     title="MARPA Web",
@@ -33,6 +34,11 @@ def health() -> dict[str, str]:
         "status": "ok",
         "service": "marpa-web",
     }
+
+
+@app.get("/profiles")
+def profiles() -> list[dict[str, str]]:
+    return list_profiles()
 
 
 @app.get("/", response_class=HTMLResponse)

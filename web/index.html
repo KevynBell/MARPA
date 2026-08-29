@@ -530,24 +530,27 @@
         }
 
         #new-conversation-button {
-            width: 100%;
-            margin-top: 8px;
-            padding: 8px 10px;
+            margin-top: 14px;
+            padding: 9px 14px;
             border: 1px solid var(--border);
-            border-radius: 7px;
-            background: transparent;
-            color: var(--text-muted);
+            border-radius: 8px;
+            background: var(--surface-raised);
+            color: var(--text);
             cursor: pointer;
             transition:
-                background 0.15s ease,
-                color 0.15s ease,
-                border-color 0.15s ease;
+                background 120ms ease,
+                border-color 120ms ease,
+                transform 120ms ease;
         }
 
         #new-conversation-button:hover:not(:disabled) {
-            background: var(--surface-raised);
-            color: var(--text);
-            border-color: var(--user);
+            background: var(--surface-hover);
+            border-color: var(--border-light);
+            transform: translateY(-1px);
+        }
+
+        #new-conversation-button:active:not(:disabled) {
+            transform: translateY(0);
         }
 
         #new-conversation-button:disabled {
@@ -563,6 +566,10 @@
             <section class="brand">
                 <h1>MARPA</h1>
                 <p>Memory-Augmented Reasoning &amp; Planning Assistant</p>
+
+                <button id="new-conversation-button" type="button">
+                    New Conversation
+                </button>
             </section>
 
             <aside class="status-panel" aria-label="MARPA system status">
@@ -580,13 +587,8 @@
                     <label for="profile-select">Profile</label>
 
                     <select id="profile-select">
-                        <option value="kevyn">Kevyn</option>
-                        <option value="guest">Guest</option>
+                        <option value="">Loading profiles...</option>
                     </select>
-
-                    <button id="new-conversation-button" type="button">
-                        New Conversation
-                    </button>
                 </div>
 
                 <div class="system-detail">
