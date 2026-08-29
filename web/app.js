@@ -4,6 +4,9 @@ const sendButton = document.getElementById("send-button");
 const profileSelect = document.getElementById("profile-select");
 const newConversationButton = document.getElementById("new-conversation-button");
 
+const addProfileButton =
+    document.getElementById("add-profile-button");
+
 const ACTIVE_PROFILE_KEY = "marpa.activeProfile";
 
 let currentUserId = "";
@@ -324,6 +327,7 @@ function setComposerBusy(isBusy) {
     promptInput.disabled = isBusy;
     profileSelect.disabled = isBusy;
     newConversationButton.disabled = isBusy;
+    addProfileButton.disabled = isBusy;
 
     sendButton.textContent =
         isBusy
@@ -407,6 +411,80 @@ async function startNewConversation() {
         setComposerBusy(false);
     }
 }
+
+
+async function addProfile() {
+    if (addProfileButton.disabled) {
+        return;
+    }
+
+    const displayName = window.prompt(
+        "Enter a name for the new MARPA profile:"
+    );
+
+    if (displayName === null) {
+        return;
+    }
+
+    const cleanedName = displayName.trim();
+
+    if (!cleanedName) {
+        window.alert(
+            "Profile name cannot be empty."
+        );
+        return;
+    }
+
+    setComposerBusy(true);
+
+    try {
+        const response = await fetch(
+            "/profiles",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    display_name: cleanedName,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData =
+                await response.json();
+
+            throw new Error(
+                errorData.detail ||
+                "Unable to create profile."
+            );
+        }
+
+        const profile = await response.json();
+
+        localStorage.setItem(
+            ACTIVE_PROFILE_KEY,
+            profile.user_id
+        );
+
+        await loadProfiles();
+
+    } catch (error) {
+        console.error(
+            "Unable to create MARPA profile:",
+            error
+        );
+
+        window.alert(
+            error.message ||
+            "MARPA could not create the profile."
+        );
+
+        setComposerBusy(false);
+    }
+}
+
 
 async function loadProfiles() {
     setComposerBusy(true);
@@ -532,6 +610,12 @@ profileSelect.addEventListener(
 
         promptInput.focus();
     }
+);
+
+
+addProfileButton.addEventListener(
+    "click",
+    addProfile
 );
 
 

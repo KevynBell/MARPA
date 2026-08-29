@@ -6,7 +6,10 @@ from pydantic import BaseModel
 
 
 from web_client import reset_conversation, stream_prompt
-from profile_manager import list_profiles
+from profile_manager import (
+    create_profile,
+    list_profiles,
+)
 
 app = FastAPI(
     title="MARPA Web",
@@ -21,6 +24,10 @@ WEB_DIR = PROJECT_ROOT / "web"
 
 class ConversationResetRequest(BaseModel):
     user_id: str = "kevyn"
+
+
+class ProfileCreateRequest(BaseModel):
+    display_name: str
 
 
 class ChatRequest(BaseModel):
@@ -39,6 +46,28 @@ def health() -> dict[str, str]:
 @app.get("/profiles")
 def profiles() -> list[dict[str, str]]:
     return list_profiles()
+
+
+@app.post("/profiles")
+def create_user_profile(
+    request: ProfileCreateRequest,
+) -> dict[str, str]:
+    try:
+        return create_profile(
+            request.display_name
+        )
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=409,
+            detail=str(error),
+        ) from error
+
+    except OSError as error:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to create profile.",
+        ) from error
 
 
 @app.get("/", response_class=HTMLResponse)

@@ -510,8 +510,15 @@
             font-size: 0.78rem;
         }
 
+        .profile-selector-row {
+            display: flex;
+            align-items: stretch;
+            gap: 7px;
+        }
+
         #profile-select {
-            width: 100%;
+            flex: 1;
+            min-width: 0;
             padding: 8px 10px;
             border: 1px solid var(--border);
             border-radius: 7px;
@@ -525,6 +532,27 @@
         }
 
         #profile-select:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
+
+        #add-profile-button {
+            width: 38px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--surface-raised);
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        #add-profile-button:hover:not(:disabled) {
+            background: var(--surface-hover);
+            border-color: var(--border-light);
+        }
+
+        #add-profile-button:disabled {
             opacity: 0.55;
             cursor: wait;
         }
@@ -586,9 +614,15 @@
                 <div class="profile-control">
                     <label for="profile-select">Profile</label>
 
-                    <select id="profile-select">
-                        <option value="">Loading profiles...</option>
-                    </select>
+                    <div class="profile-selector-row">
+                        <select id="profile-select">
+                            <option value="">Loading profiles...</option>
+                        </select>
+
+                        <button id="add-profile-button" type="button">
+                            +
+                        </button>
+                    </div>
                 </div>
 
                 <div class="system-detail">
