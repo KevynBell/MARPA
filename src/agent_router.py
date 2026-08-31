@@ -6,6 +6,7 @@ from tools import (
     show_memory,
     show_status,
     show_system_info,
+    show_system_health,
     plan_goal,
 )
 
@@ -49,6 +50,19 @@ def route_prompt(prompt):
         "what is the system status",
     ]:
         return show_system_info()
+
+    if lowered in [
+        "/health",
+        "health",
+        "system health",
+        "show system health",
+        "marpa health",
+        "is marpa healthy?",
+        "is marpa healthy",
+        "is everything working?",
+        "is everything working",
+    ]:
+        return show_system_health()
 
     if lowered in [
         "/status",

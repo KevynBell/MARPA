@@ -3,8 +3,8 @@ import time
 import urllib.request
 from collections.abc import Callable
 
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/generate"
 MODEL_NAME = "qwen2.5:3b"
 
 OutputHandler = Callable[[str], None]

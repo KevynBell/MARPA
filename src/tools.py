@@ -13,6 +13,11 @@ from project_search import search_project_files
 from retrieval import retrieve_memory
 from planner import save_plan
 from agent_loop import execute_goal
+from system_health import (
+    format_system_health,
+    get_system_health,
+)
+
 
 CHECKPOINT_PATH = Path("models/marpa_transformer_stack_v1.pth")
 CORPUS_PATH = Path("data/marpa_corpus_v1.txt")
@@ -54,6 +59,14 @@ def show_system_info():
     info = get_system_info()
 
     return format_system_summary(info)
+
+
+def show_system_health():
+    """Return a human-readable summary of MARPA system health."""
+
+    health = get_system_health()
+
+    return format_system_health(health)
 
 
 def show_status():
