@@ -5,6 +5,7 @@ from tools import (
     inspect_project_file,
     show_memory,
     show_status,
+    show_system_info,
     plan_goal,
 )
 
@@ -19,15 +20,15 @@ def route_prompt(prompt):
     if lowered.startswith("search files for "):
         query = prompt[len("search files for "):].strip()
         return search_files(query)
-    
+
     if lowered.startswith("plan "):
         goal = prompt[len("plan "):].strip()
         return plan_goal(goal)
-    
+
     if lowered.startswith("/read "):
         file_path = prompt[len("/read "):].strip()
         return read_file(file_path)
-    
+
     if lowered.startswith("read file "):
         file_path = prompt[len("read file "):].strip()
         return read_file(file_path)
@@ -35,13 +36,31 @@ def route_prompt(prompt):
     if lowered.startswith("inspect "):
         query = prompt[len("inspect "):].strip()
         return inspect_project_file(query)
-    
-    if "status" in lowered:
+
+    if lowered in [
+        "/system",
+        "system info",
+        "system information",
+        "show system info",
+        "show system information",
+        "system status",
+        "show system status",
+        "what is the system status?",
+        "what is the system status",
+    ]:
+        return show_system_info()
+
+    if lowered in [
+        "/status",
+        "project status",
+        "show project status",
+        "marpa project status",
+    ]:
         return show_status()
 
     if lowered in ["/memory", "show memory", "show your memory"]:
         return show_memory()
-    
+
     if lowered in ["what is marpa?", "what is marpa"]:
         return (
             "MARPA is a Memory-Augmented Reasoning and Planning Assistant. "

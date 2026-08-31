@@ -1,8 +1,12 @@
 from pathlib import Path
 from memory_manager import (
-    load_project_notes, 
+    load_project_notes,
     load_observations,
     load_permanent_memory
+)
+from system_info import (
+    format_system_summary,
+    get_system_info,
 )
 from file_tools import read_project_file
 from project_search import search_project_files
@@ -42,6 +46,14 @@ def show_notes():
         return "No project notes found."
 
     return PROJECT_NOTES_PATH.read_text(encoding="utf-8")
+
+
+def show_system_info():
+    """Return a human-readable summary of the local MARPA host."""
+
+    info = get_system_info()
+
+    return format_system_summary(info)
 
 
 def show_status():
