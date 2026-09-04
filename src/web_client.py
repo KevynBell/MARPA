@@ -1,9 +1,10 @@
 import json
 import socket
 from collections.abc import Iterator
+from config import CONFIG
 
-HOST = "127.0.0.1"
-PORT = 5050
+HOST = CONFIG["daemon"]["host"]
+PORT = CONFIG["daemon"]["port"]
 DEFAULT_USER_ID = "kevyn"
 
 

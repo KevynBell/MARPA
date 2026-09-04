@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
 
-
+from config import CONFIG
 from web_client import reset_conversation, stream_prompt
 from profile_manager import (
     create_profile,
@@ -33,6 +33,16 @@ class ProfileCreateRequest(BaseModel):
 class ChatRequest(BaseModel):
     prompt: str
     user_id: str = "kevyn"
+
+
+@app.get("/config")
+def runtime_config() -> dict[str, str]:
+    """Return non-sensitive MARPA runtime information."""
+
+    return {
+        "node_name": CONFIG["marpa"]["node_name"],
+        "installation_mode": CONFIG["marpa"]["installation_mode"],
+    }
 
 
 @app.get("/health")

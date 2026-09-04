@@ -9,6 +9,12 @@ const addProfileButton =
 
 const ACTIVE_PROFILE_KEY = "marpa.activeProfile";
 
+const nodeName =
+    document.getElementById("node-name");
+
+const footerNodeName =
+    document.getElementById("footer-node-name");
+
 let currentUserId = "";
 
 
@@ -486,6 +492,39 @@ async function addProfile() {
 }
 
 
+async function loadRuntimeConfig() {
+    try {
+        const response = await fetch("/config");
+
+        if (!response.ok) {
+            throw new Error(
+                `Request failed with status ${response.status}`
+            );
+        }
+
+        const config = await response.json();
+
+        nodeName.textContent =
+            config.node_name;
+
+        footerNodeName.textContent =
+            config.node_name;
+
+    } catch (error) {
+        console.error(
+            "Unable to load MARPA runtime configuration:",
+            error
+        );
+
+        nodeName.textContent =
+            "Unknown";
+
+        footerNodeName.textContent =
+            "Unknown node";
+    }
+}
+
+
 async function loadProfiles() {
     setComposerBusy(true);
 
@@ -625,6 +664,7 @@ newConversationButton.addEventListener(
 );
 
 
+loadRuntimeConfig();
 loadProfiles();
 
 promptInput.focus();

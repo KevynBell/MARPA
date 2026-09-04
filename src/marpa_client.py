@@ -2,10 +2,6 @@ from web_client import send_prompt
 
 
 
-HOST = "127.0.0.1"
-PORT = 5050
-
-
 def main() -> None:
     print("MARPA client connected mode.")
     print("Type 'quit' to exit.\n")

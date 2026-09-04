@@ -2,10 +2,12 @@ import json
 import time
 import urllib.request
 from collections.abc import Callable
+from config import CONFIG
 
-OLLAMA_BASE_URL = "http://localhost:11434"
+
+OLLAMA_BASE_URL = CONFIG["model"]["base_url"]
 OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/generate"
-MODEL_NAME = "qwen2.5:3b"
+MODEL_NAME = CONFIG["model"]["name"]
 
 OutputHandler = Callable[[str], None]
 

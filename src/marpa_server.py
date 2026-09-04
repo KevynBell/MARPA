@@ -3,6 +3,7 @@ import socketserver
 import threading
 from collections.abc import Callable
 
+from config import CONFIG
 from agent_router import route_prompt
 from llm_backend import ask_local_model
 from memory_manager import (
@@ -14,8 +15,8 @@ from memory_manager import (
 )
 
 
-HOST = "127.0.0.1"
-PORT = 5050
+HOST = CONFIG["daemon"]["host"]
+PORT = CONFIG["daemon"]["port"]
 MAX_HISTORY_ITEMS = 10
 
 
